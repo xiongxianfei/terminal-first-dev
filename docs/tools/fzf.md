@@ -1,124 +1,199 @@
-# fzf: fuzzy selection and shell integration
+# fzf
 
-Optional fuzzy selection for Windows PowerShell 7, Ubuntu/WSL Bash, and macOS Zsh. fzf selects from input; [zoxide](zoxide.md) learns directory history. Installing either executable is separate from enabling shell integration.
+Select items interactively from files, history, or command output. Use fzf 0.51.0+ with [zoxide](zoxide.md) for `zi`. Platform walkthroughs below are unverified.
 
-## Install and check the version
+## Ubuntu 26.04
 
-| Environment | Command |
-| --- | --- |
-| Windows, PowerShell 7 | `winget install --id junegunn.fzf --exact --source winget` |
-| Ubuntu/WSL | `sudo apt update` followed by `sudo apt install fzf` |
-| macOS, Homebrew already configured | `brew install fzf` |
+Requires Bash, Git, `curl` or `wget`, `tar`, Vim, and CA certificates. Run inside Ubuntu, including WSL. Use the upgrade section if `~/.fzf` already exists. Stop if installation fails.
 
-APT requires sudo; WinGet may request elevation. Follow local policy. Do not install Windows executables as a substitute for Linux packages inside WSL, or run Homebrew with sudo.
-
-Run `fzf --version`. For the complete zoxide/fzf workflow, use **fzf 0.51.0 or newer**, matching current zoxide's documented minimum. The shared Bash/Zsh snippets use the executable's `--bash`/`--zsh` integration output; an unsupported option produces a warning and leaves standalone fzf available.
-
-**Ubuntu 24.04:** its distribution package is from the 0.44.1 series, so `apt install fzf` alone does not meet that workflow baseline. Check the local candidate with `apt-cache policy fzf`. Either keep standalone fzf and ordinary `z` for now, or obtain a suitable stable binary from the [official fzf releases](https://github.com/junegunn/fzf/releases). Choose the Linux architecture matching `uname -m`, review the release, and verify its published checksum when provided.
-
-For a manually downloaded and extracted Linux binary, back up an existing destination before replacing it, then adapt this source path:
+**1. Run in terminal:** back up the profile before the installer can change it.
 
 ```bash
-mkdir -p "$HOME/.local/bin"
-install -m 0755 /path/to/extracted/fzf "$HOME/.local/bin/fzf"
-export PATH="$HOME/.local/bin:$PATH"
+cp --backup=numbered ~/.bashrc ~/.bashrc.bak
+# Executes upstream code; no sudo. Accept Bash completion/keybindings and profile setup.
+git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf" && "$HOME/.fzf/install"
+
+# Confirm the installer generated this file before editing the profile.
+ls -l ~/.fzf.bash
+vim ~/.bashrc
+```
+
+**2. Check `~/.bashrc`:** the installer normally adds this line. Keep it once, near the end; add it only if missing. Remove duplicate fzf initialization such as `eval "$(fzf --bash)"`. Save and quit Vim with `Esc`, then `:wq`.
+
+```bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+```
+
+**3. Verify in a new Bash terminal:** `command -v fzf` should resolve to `~/.fzf/bin/fzf`. If `~/.fzf.bash` was missing, rerun the installer first; the source line alone cannot generate it.
+
+```bash
+command -v fzf
+fzf --version
+printf '%s\n' alpha beta | fzf --filter=beta  # Expected: beta.
+
+# Use
+printf '%s\n' alpha beta | fzf  # Enter selects; Escape cancels.
+# Ctrl+R: history; Ctrl+T: files; Alt+C: directories.
+```
+
+### Upgrade
+
+```bash
+# Back up ~/.bashrc and ~/.fzf.bash as well as the binary before updating.
+cp --backup=numbered ~/.fzf/bin/fzf ~/.fzf/bin/fzf.bak
+git -C "$HOME/.fzf" rev-parse HEAD
+# Fetch and execute the updated installer. APT does not update this copy.
+git -C "$HOME/.fzf" pull --ff-only && "$HOME/.fzf/install"
+fzf --version
+# Open a fresh Bash terminal; restore the saved binary to roll back.
+```
+
+### Uninstall
+
+```bash
+# Permanently deletes this checkout. Save backups or other needed files elsewhere first.
+rm -rf -- "$HOME/.fzf"
+
+# Remove the fzf source line; preserve configuration for other tools.
+# Remove the generated Bash configuration after saving any customizations.
+rm -f -- "$HOME/.fzf.bash"
+vim ~/.bashrc
+# Save and open a fresh Bash terminal.
+```
+
+To undo profile changes, compare `~/.bashrc` with `~/.bashrc.bak` (or its numbered backups) and restore only the intended changes.
+
+## Win11
+
+Requires PowerShell 7 and WinGet. WinGet may request elevation; install separately from WSL. Basic fzf use and zoxide's `zi` do not require PSFzf.
+
+```powershell
+# Install
+winget install --id junegunn.fzf --exact --source winget
+# Open a new PowerShell 7 terminal if fzf is not yet on PATH.
+
+# Configure
+# No profile changes are needed for basic selection.
+
+# Verify
+Get-Command fzf
+fzf --version
+'alpha', 'beta' | fzf --filter=beta  # Expected: beta.
+
+# Use
+'alpha', 'beta' | fzf  # Enter selects; Escape cancels.
+```
+
+### Optional keybindings
+
+Requires Vim on PATH. This installs third-party module code; review trust prompts. No execution-policy change is needed.
+
+**1. Run in a PowerShell 7 terminal:**
+
+```powershell
+# Install optional PowerShell integration.
+Install-Module -Name PSFzf -Repository PSGallery -Scope CurrentUser
+
+# Back up or create the PowerShell 7 profile, then edit it.
+if (Test-Path $PROFILE) { Copy-Item $PROFILE "$PROFILE.$(Get-Date -Format yyyyMMddHHmmssfff).bak" }
+if (!(Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force | Out-Null }
+vim $PROFILE
+```
+
+**2. Add to `$PROFILE`:** place these lines once after prompt/PSReadLine setup. Remove duplicate PSFzf configuration. Save and quit Vim with `Esc`, then `:wq`.
+
+```powershell
+Import-Module PSReadLine
+Import-Module PSFzf
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+```
+
+**3. Verify in a new PowerShell 7 terminal:** check the registered handlers, then try Ctrl+T for files and Ctrl+R for history.
+
+```powershell
+Get-Module PSFzf
+Get-PSReadLineKeyHandler -Chord Ctrl+t,Ctrl+r
+```
+
+### Upgrade
+
+```powershell
+# Record the current version; reinstall that version if available to roll back.
+fzf --version
+winget upgrade --id junegunn.fzf --exact --source winget
+fzf --version
+# Only if PSFzf was installed through PowerShell Gallery:
+# Update-Module PSFzf
+```
+
+### Uninstall
+
+```powershell
+winget uninstall --id junegunn.fzf --exact
+# If you enabled PSFzf, remove its Import-Module and Set-PsFzfOption lines.
+# Preserve PSReadLine if other features use it. Save and restart PowerShell.
+# vim $PROFILE
+# Uninstall-Module PSFzf
+```
+
+Restore the saved profile to roll back configuration changes, accounting for later edits.
+
+## macOS
+
+Requires Homebrew, Zsh, and Vim on PATH. Do not run Homebrew with sudo.
+
+**1. Run in terminal:**
+
+```zsh
+brew install fzf
+# Back up an existing profile without replacing an earlier backup.
+if [[ -f ~/.zshrc ]]; then cp -p ~/.zshrc "$(mktemp "$HOME/.zshrc.backup.XXXXXX")"; fi
+vim ~/.zshrc
+```
+
+**2. Add to `~/.zshrc`:** place this line once after completion/prompt setup. Remove duplicate fzf initialization. On plain Zsh, initialize `compinit` first; do not duplicate framework setup. Save and quit Vim with `Esc`, then `:wq`.
+
+```zsh
+source <(fzf --zsh)
+```
+
+**3. Verify in a new Zsh terminal:** fzf should resolve to the Homebrew installation and filtering should print `beta`.
+
+```zsh
+command -v fzf
+fzf --version
+printf '%s\n' alpha beta | fzf --filter=beta  # Expected: beta.
+
+# Use
+printf '%s\n' alpha beta | fzf
+# Ctrl+R: history; Ctrl+T: files; Alt+C: directories (terminal settings may intercept).
+```
+
+### Upgrade
+
+```zsh
+brew upgrade fzf
 fzf --version
 ```
 
-Keep that PATH entry before the snippet in the shell profile. Verify `command -v fzf` resolves the intended binary; a later APT upgrade does not update a manually installed binary. To undo this override, remove only that user-installed binary or restore its backup and start a fresh shell. No remote installer is executed by this repository.
-
-## Enable the shared shell snippet
-
-Back up the relevant profile before editing. Review the snippet first: it evaluates initialization code emitted by your locally installed tools. Trust and inspect the binaries resolved through PATH. Source from an absolute, trusted checkout path, adapting the examples below; moving the checkout requires updating the profile. Future changes to a sourced snippet take effect in new shells, so review updates before pulling them.
-
-Use one integration route, not this snippet plus an existing plugin/framework initialization for the same tools. Successful loads are guarded within the session; failures can be retried. No snippet changes execution policy, installs packages, replaces `cd`, or overwrites `FZF_*` settings. Loading fzf integration can change shell keybindings.
-
-### Bash: Ubuntu or WSL
-
-Add at the end of `~/.bashrc`, after existing prompt and completion setup:
-
-```bash
-source "$HOME/src/terminal-first-dev/config/shell/navigation.bash"
-```
-
-Canonical configuration: [navigation.bash](../../config/shell/navigation.bash). It does nothing in noninteractive Bash. The example assumes the repository is cloned under `~/src`; substitute your actual path.
-
-### Zsh: macOS or Ubuntu
-
-Add at the end of `~/.zshrc`, after your framework's completion and prompt setup:
+### Uninstall
 
 ```zsh
-source "$HOME/src/terminal-first-dev/config/shell/navigation.zsh"
+brew uninstall fzf
+# Remove the fzf source line, save, and restart Zsh.
+vim ~/.zshrc
 ```
 
-Canonical configuration: [navigation.zsh](../../config/shell/navigation.zsh). It does nothing in noninteractive Zsh. On plain Zsh with no completion framework, initialize completion before that source line:
+Restore the saved profile to undo configuration changes.
 
-```zsh
-autoload -Uz compinit
-compinit
-```
+## Troubleshooting
 
-Do not add a second `compinit` when your framework already runs it. The snippet does not create or clear completion caches itself.
+- **Missing `~/.fzf.bash`:** `install --bin` does not generate it. Run `~/.fzf/install`, accept Bash setup, then open a new terminal. The guarded source line silently skips a missing file.
+- **Wrong or missing binary:** check `command -v fzf` or `Get-Command fzf`; an old APT/manual copy may still be on PATH.
+- **Unknown `--bash` / `--zsh` option:** upgrade fzf before evaluating its initialization output.
+- **Missing keybindings:** check profile initialization or PSFzf imports, remove duplicates, and open a fresh terminal.
+- **`zi` fails:** check `fzf --version` and [zoxide configuration](zoxide.md); PSFzf is not required.
 
-### PowerShell 7: Windows
+Initialization evaluates code from the executable on PATH. Use trusted installations; history pickers can reveal secrets. Do not pipe untrusted selections into command execution.
 
-Edit the profile reported by `$PROFILE` **inside PowerShell 7**, not Windows PowerShell 5.1. Back up an existing file; create it and its parent directory only when absent. Add after prompt customization and PSReadLine edit-mode settings:
-
-```powershell
-. 'C:\src\terminal-first-dev\config\shell\navigation.ps1'
-```
-
-Canonical configuration: [navigation.ps1](../../config/shell/navigation.ps1). The dot and following space are required to load into the current session. The path is an example, not a required checkout location. This enables zoxide when installed; raw fzf pipelines and `zi` do not need a module.
-
-**Optional PowerShell keybindings:** review [PSFzf](https://github.com/kelleyma49/PSFzf) and its [PowerShell Gallery package](https://www.powershellgallery.com/packages/PSFzf), then install manually:
-
-```powershell
-Install-Module -Name PSFzf -Repository PSGallery -Scope CurrentUser
-```
-
-This adds third-party module code to your user profile; review trust prompts rather than bypassing them. No administrator shell or execution-policy relaxation is prescribed. Replace the single source line above with:
-
-```powershell
-$TerminalFirstEnableFzfKeys = $true
-. 'C:\src\terminal-first-dev\config\shell\navigation.ps1'
-```
-
-The snippet imports PSReadLine before PSFzf and explicitly binds Ctrl+T (paths) and Ctrl+R (history). Module defaults may add other bindings; ordinary Tab is not explicitly replaced by this snippet. Import failures warn without preventing zoxide initialization. Leave the opt-in unset/false to keep this snippet from loading PSFzf.
-
-## Use and verify
-
-Noninteractive smoke check; expected output is `beta`:
-
-```bash
-# Bash or Zsh
-printf '%s\n' alpha beta | fzf --filter=beta
-```
-
-```powershell
-# PowerShell
-'alpha', 'beta' | fzf --filter=beta
-```
-
-Then open a new interactive shell. Check `zoxide --version` and `fzf --version`; inspect `type z zi` (Bash/Zsh) or `Get-Command z, zi` (PowerShell). Use [zoxide's seed/check steps](zoxide.md#use-and-verify), then try `zi` and cancel with Escape.
-
-Bash/Zsh's native fzf integration supplies Ctrl+R for history, Ctrl+T for file/path selection, and Alt+C for directory selection. PowerShell Ctrl+T/Ctrl+R require the optional PSFzf route above. Test in your actual terminal: terminal shortcuts, macOS Option-key settings, shell editing modes, or later profile code can intercept or replace keys.
-
-## Troubleshooting and rollback
-
-| Symptom | Action |
-| --- | --- |
-| Executable not found | Open a new shell; inspect `command -v fzf zoxide` or `Get-Command fzf,zoxide`. Windows and WSL are separate. |
-| `unknown option: --bash` / `--zsh` | Upgrade fzf as described above. Do not evaluate failed command output or assume old distribution packages support native integration. |
-| `z` works but `zi` fails | Check the fzf version and executable path. PSFzf is unrelated to zoxide's picker. |
-| PowerShell keys do nothing | Check the opt-in, `Get-Module -ListAvailable PSFzf`, warnings, and `Get-PSReadLineKeyHandler -Chord Ctrl+r,Ctrl+t`. |
-| Duplicate hooks or unexpected keys | Remove duplicate init lines; configure edit mode before integration; restart after changes. |
-
-Remove the source line and PowerShell opt-in, restore any backed-up profile, then start a **fresh shell** to discard loaded functions, hooks, and keybindings. For profile recovery, use `pwsh -NoProfile`, `bash --noprofile --norc`, or `zsh -f`. Removing a line does not unload an already running shell.
-
-Remove packages only through the channel used: `winget uninstall --id junegunn.fzf --exact`, `sudo apt remove fzf`, or `brew uninstall fzf`; remove optional PSFzf with `Uninstall-Module PSFzf`. Keep local history and zoxide data private; history pickers can display secrets previously entered at the prompt. Do not pipe untrusted selections directly into command execution.
-
-## Sources and verification boundary
-
-References reviewed November 12, 2026: [fzf installation and shell integration](https://github.com/junegunn/fzf#installation), [zoxide's fzf requirement](https://github.com/ajeetdsouza/zoxide#installation), [Ubuntu 24.04 package](https://packages.ubuntu.com/noble/fzf), and [PSFzf integration](https://github.com/kelleyma49/PSFzf#psreadline-integration).
-
-Automated checks use mocked executables/modules to test safe missing-tool behavior, failed initialization, independent loading, and repeated sourcing. They do not prove package installation, real interactive picker behavior, or every terminal's keybindings. Record real platform, shell/tool versions, date, and outcomes separately.
+[Official installation and shell integration](https://github.com/junegunn/fzf#installation) and [PSFzf configuration](https://github.com/kelleyma49/PSFzf#psreadline-integration), reviewed November 12, 2026. Documentation and syntax checks do not establish platform compatibility.

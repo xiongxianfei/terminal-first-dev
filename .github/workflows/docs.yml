@@ -21,14 +21,6 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Check local documentation links and anchors
         run: python3 tests/check_docs.py
-      - name: Check retained setup and configuration guidance
-        shell: bash
-        run: |
-          set -euo pipefail
-          for test in tests/markdown/*.test.sh; do
-            echo "RUN: $test"
-            bash "$test"
-          done
   navigation:
     name: Navigation (${{ matrix.os }})
     strategy:

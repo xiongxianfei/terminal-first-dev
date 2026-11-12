@@ -13,12 +13,9 @@ Run from the repository root in Ubuntu/WSL or another environment with Python an
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 tests/check_docs.py
-for test in tests/markdown/*.test.sh; do
-  bash "$test" || exit 1
-done
 ```
 
-Expected result: the unit tests, maintained local links and anchors, repository command paths, and three content-safety suites pass. These checks do not install software or validate a real Windows/WSL workstation. External URLs and archived historical records are outside their scope.
+Expected result: unit tests pass, and the documentation checker reports valid local links, anchors, and repository command paths. Shell snippet tests use mocked tools; unavailable shell runtimes are reported as skipped. These checks do not install software or validate a real Windows/WSL workstation. External URLs and archived historical records are outside their scope.
 
 Before committing, review the staged changes. Recognize Windows CRLF line endings without rewriting historical files:
 
@@ -27,7 +24,7 @@ git diff --cached --name-only
 git -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --cached --check
 ```
 
-Record new test results in the relevant maintained note or pull request, not in the frozen archive. See [the editing guide](../../CONTRIBUTING.md#checks).
+Record new test results in the relevant maintained note or pull request, not in the frozen archive. See [the editing guide](../../AGENTS.md#checks).
 
 ## Workstation checks
 

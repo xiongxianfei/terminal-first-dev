@@ -1,77 +1,127 @@
-# zoxide: jump to familiar directories
+# zoxide
 
-Optional directory navigation for Windows PowerShell 7, Ubuntu/WSL Bash, and macOS Zsh. `z` ranks previously visited directories; `zi` uses [fzf](fzf.md) for interactive selection. This does not replace `cd` or install anything automatically.
+Jump to familiar directories with `z`; use [fzf](fzf.md) 0.51.0+ for `zi`. Platform walkthroughs below are unverified.
 
-## Install
+## Ubuntu 26.04
 
-Use the package manager for the environment where the shell runs. Windows and WSL need separate installations and keep separate directory histories.
+Requires Bash, `curl`, `tar`, `vim`, and CA certificates. Run inside Ubuntu, including when using WSL. Stop if installation fails.
 
-| Environment | Command |
-| --- | --- |
-| Windows, PowerShell 7 | `winget install --id ajeetdsouza.zoxide --exact --source winget` |
-| Ubuntu/WSL | `sudo apt update` followed by `sudo apt install zoxide` |
-| macOS, Homebrew already configured | `brew install zoxide` |
-
-APT changes system packages and requires sudo; WinGet may request elevation. Follow local policy, and do not run Homebrew with sudo. Open a new terminal after PATH changes.
-
-Check `zoxide --version`. For `zi`, also install fzf: current upstream zoxide documents **fzf 0.51.0 or newer** as its minimum. Ubuntu 24.04's packaged fzf is older; follow the [fzf version guidance](fzf.md#install-and-check-the-version) rather than assuming APT provides every integration feature.
-
-## Enable shell integration
-
-Review and load the matching shared snippet using the [activation instructions](fzf.md#enable-the-shared-shell-snippet):
-
-| Shell | Reusable snippet |
-| --- | --- |
-| PowerShell 7 | [navigation.ps1](../../config/shell/navigation.ps1) |
-| Bash | [navigation.bash](../../config/shell/navigation.bash) |
-| Zsh | [navigation.zsh](../../config/shell/navigation.zsh) |
-
-The snippets initialize each installed tool independently, keep `cd` unchanged, and avoid repeating successful initialization when sourced again. Zsh initialization belongs after `compinit`; prompt/framework setup belongs before these snippets. Existing `z`/`zi` aliases may conflict: inspect them before opting in.
-
-fzf shell keybindings and the PowerShell PSFzf module are **not required by `zi`**; the compatible fzf executable is sufficient.
-
-## Use and verify
-
-First visit a real project directory normally and let the next prompt appear, or explicitly seed the database. The home directory itself is excluded by default; use an existing non-excluded project path and adapt the example checkout location:
+**1. Run in terminal:**
 
 ```bash
-# Bash or Zsh
-cd "$HOME/src/terminal-first-dev"
+# Install
+# Executes the upstream installer. Back up existing zoxide files first.
+# Writes ~/.local/bin and ~/.local/share/man; investigate unexpected sudo prompts.
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+# Configure future sessions
+# Back up ~/.bashrc, then open it in an editor.
+cp --backup=numbered ~/.bashrc ~/.bashrc.bak
+vim ~/.bashrc
+```
+
+**2. Add to `~/.bashrc`:** place these lines once at the end, after prompt setup. Reuse an existing PATH entry if it already includes `~/.local/bin`; remove duplicate zoxide/wrapper initialization. Save and quit Vim with `Esc`, then `:wq`.
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+eval "$(zoxide init bash)"
+```
+
+**3. Verify in a new Bash terminal:** `type z zi` should report shell functions. Then try navigation from an existing project directory.
+
+```bash
+# Verify
+zoxide --version
+type z zi
+
+# Use
+# Run from an existing project directory, not your home directory.
 zoxide add "$PWD"
 zoxide query --list
-cd "$HOME"
-z terminal-first-dev
-pwd
+z "${PWD##*/}"
+zi  # Requires fzf; Escape cancels.
 ```
 
-Expected result: the project appears in the directory list, and the final working directory is the intended checkout. If several paths share that name, narrow the query using another distinctive path fragment.
+### Upgrade
 
-PowerShell equivalent:
+```bash
+# Back up the binary and manpages before replacement. APT does not update this copy.
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+zoxide --version
+# Open a fresh Bash terminal; restore saved files to roll back.
+```
+
+### Uninstall
+
+```bash
+# Deletes this installer's executable and manpages; directory history remains.
+rm -f "$HOME/.local/bin/zoxide" "$HOME/.local/share/man/man1/"zoxide*.1
+
+# Remove the zoxide init line; retain PATH entries needed by other tools.
+vim ~/.bashrc
+# Save and open a fresh Bash terminal.
+```
+
+To undo profile changes, compare `~/.bashrc` with `~/.bashrc.bak` (or its numbered backups) and restore only the intended changes.
+
+## Win11
+
+Requires PowerShell 7, WinGet, and Vim on PATH. Install separately from WSL; WinGet may request elevation. Stop if installation fails.
+
+**1. Run in a PowerShell 7 terminal:**
 
 ```powershell
-Set-Location 'C:\src\terminal-first-dev'
-zoxide add (Get-Location).Path
-zoxide query --list
-Set-Location $HOME
-z terminal-first-dev
-Get-Location
+# Install
+winget install --id ajeetdsouza.zoxide --exact --source winget
+# Open a new PowerShell 7 terminal if zoxide is not yet on PATH.
+
+# Configure future sessions
+# Back up an existing profile, or create it without replacing an existing file.
+if (Test-Path $PROFILE) { Copy-Item $PROFILE "$PROFILE.$(Get-Date -Format yyyyMMddHHmmssfff).bak" }
+if (!(Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force | Out-Null }
+vim $PROFILE
 ```
 
-Use `z project` to jump by a directory-name fragment, `z project api` to narrow the match, and `zi` to select from learned directories. Press Escape to cancel the picker. An empty database is not an installation failure; example project names are not directories created by this guide.
+**2. Add to `$PROFILE`:** place this line once at the end. Remove duplicate zoxide/wrapper initialization. Save and quit Vim with `Esc`, then `:wq`.
 
-## Troubleshooting and rollback
+```powershell
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
+```
 
-| Symptom | Check |
-| --- | --- |
-| `zoxide` works but `z` is unknown | Confirm the correct shell profile sources the snippet; restart the shell. |
-| `zi` fails but `z` works | Run `fzf --version`; inspect PATH for an old binary and check the minimum above. |
-| A directory never appears | Check `_ZO_EXCLUDE_DIRS` (the home directory is excluded by default); visit a non-excluded path or use `zoxide add` with its actual path. |
-| Existing `z` or prompt behavior changes | Remove duplicate initialization or the conflicting alias; restore the backed-up profile and start a fresh shell. |
+**3. Verify in a new PowerShell 7 terminal:** `Get-Command z, zi` should find both commands. Then try navigation from an existing project directory.
 
-Remove the snippet's source line and restart to undo integration. Uninstall through the original channel: `winget uninstall --id ajeetdsouza.zoxide --exact`, `sudo apt remove zoxide`, or `brew uninstall zoxide`. Uninstalling is not a promise that local history is erased.
+```powershell
+# Verify
+zoxide --version
+Get-Command z, zi
 
-zoxide stores directory history locally. Do not commit its database, private directory listings, or shell history. Configure exclusions using upstream options before visiting sensitive locations; exclusions are not a retroactive data wipe.
+# Use
+# Run from an existing project directory, not your home directory.
+zoxide add (Get-Location).Path
+zoxide query --list
+z (Split-Path -Leaf (Get-Location).Path)
+zi  # Requires fzf; Escape cancels.
+```
 
-## Sources and verification boundary
+### Upgrade
 
-Reference reviewed November 12, 2026: [upstream installation, initialization, usage, and configuration](https://github.com/ajeetdsouza/zoxide#installation). Automated repository tests exercise snippet logic with mocked tools, not package installation or a real `zi` picker. Record tool versions, shell, platform, date, and manual outcomes when testing on your workstation.
+```powershell
+# Record the current version; reinstall that version if available to roll back.
+zoxide --version
+winget upgrade --id ajeetdsouza.zoxide --exact --source winget
+zoxide --version
+```
+
+### Uninstall
+
+```powershell
+winget uninstall --id ajeetdsouza.zoxide --exact
+
+# Remove the zoxide initialization line, save, and restart PowerShell.
+vim $PROFILE
+# Directory history remains. Restore the saved profile to undo configuration changes.
+```
+
+Use trusted executables on PATH: initialization evaluates code they emit. If `z` is missing, check profile initialization; if `zi` fails, check `fzf --version`. Keep directory history and private paths out of Git.
+
+[Official installation and configuration](https://github.com/ajeetdsouza/zoxide#installation), reviewed November 12, 2026. Documentation and syntax checks do not establish platform compatibility.
