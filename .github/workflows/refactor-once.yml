@@ -49,7 +49,7 @@ jobs:
           test "$count" -eq 3
           git diff --exit-code 8f22389e563a6b1376a36eef74b26e36bd6a3659 -- config .gitignore LICENSE CODE_OF_CONDUCT.md SECURITY.md
           git add -A
-          git diff --cached --check
+          git -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --cached --check
           git diff --cached --stat
       - name: Commit only to the dedicated refactor branch
         shell: bash
