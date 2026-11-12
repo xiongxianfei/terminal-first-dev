@@ -7,9 +7,8 @@ guide=docs/linux/ubuntu-setup.md
 verification=docs/windows/verification.md
 proxy_troubleshooting=docs/networking/proxy.md
 ubuntu_troubleshooting=docs/linux/ubuntu-setup.md
-certificate_adr=archive/legacy/docs/adr/2026-05-25-wsl-certificate-trust-policy.md
 
-for path in "$guide" "$verification" "$proxy_troubleshooting" "$ubuntu_troubleshooting" "$certificate_adr"; do
+for path in "$guide" "$verification" "$proxy_troubleshooting" "$ubuntu_troubleshooting"; do
   test -f "$path" || {
     echo "missing required file: $path" >&2
     exit 1
@@ -36,9 +35,10 @@ grep -q '/usr/local/share/ca-certificates/win11' "$proxy_troubleshooting"
 grep -q 'sudo update-ca-certificates' "$proxy_troubleshooting"
 grep -q 'SSL certificate problem' "$proxy_troubleshooting"
 grep -q 'WSL Certificate Trust Policy' "$proxy_troubleshooting"
-grep -q 'export public certificate data only' "$certificate_adr"
-grep -q 'deduplicate certificates by thumbprint' "$certificate_adr"
-grep -q 'never commit exported certificate material' "$certificate_adr"
+# Check the maintained safeguards, not an archived file removed from the checkout.
+grep -q 'export public certificate data only' "$proxy_troubleshooting"
+grep -q 'deduplicate certificates by thumbprint' "$proxy_troubleshooting"
+grep -q 'never commit exported certificate material' "$proxy_troubleshooting"
 
 grep -q '/etc/wsl.conf' "$guide"
 grep -q 'enabled=false' "$guide"

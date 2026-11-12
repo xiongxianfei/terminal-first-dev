@@ -166,7 +166,9 @@ Use credential-free examples in public docs. Keep private proxy hostnames, usern
 
 Symptoms can include `SSL certificate problem`, `unable to get local issuer certificate`, or HTTPS failures from `apt`, `curl`, `git`, language package managers, or Neovim plugin installation inside WSL while the same site works from Windows.
 
-Design reference: [ADR: WSL Certificate Trust Policy](../../archive/legacy/docs/adr/2026-05-25-wsl-certificate-trust-policy.md).
+Historical design reference: [ADR: WSL Certificate Trust Policy](https://github.com/xiongxianfei/terminal-first-dev/blob/f13eb81fe167bd7902d1b707ea1370011e977ff4/archive/legacy/docs/adr/2026-05-25-wsl-certificate-trust-policy.md).
+
+Keep these safeguards in the maintained procedure: export public certificate data only, deduplicate certificates by thumbprint, and never commit exported certificate material.
 
 Warning: importing all Windows root and intermediate certificates into Ubuntu broadly extends Ubuntu's trust store. Prefer exporting only the required enterprise root or intermediate certificate when you know which certificate is needed. Do not commit exported certificates to this repository.
 
