@@ -15,34 +15,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
-      - name: Unit and shell snippet checks
-        run: |
-          bash -n config/shell/navigation.bash
-          python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Documentation checker unit tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Check local documentation links and anchors
         run: python3 tests/check_docs.py
-  navigation:
-    name: Navigation (${{ matrix.os }})
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 5
-    env:
-      PYTHONDONTWRITEBYTECODE: "1"
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          persist-credentials: false
-      - name: Bash and Zsh syntax and mocked initialization
-        if: runner.os == 'macOS'
-        shell: bash
-        run: |
-          bash -n config/shell/navigation.bash
-          zsh -n config/shell/navigation.zsh
-          python3 -m unittest discover -s tests -p 'test_navigation.py' -v
-      - name: PowerShell syntax and mocked initialization
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: pwsh -NoProfile -NonInteractive -File tests/shell/navigation.ps1

@@ -24,14 +24,14 @@ Keep one tool per row in the [tool index](docs/tools/README.md), with installati
 
 ## Checks
 
-Run these checks from the repository root with Python 3.10+ and Bash, then inspect the diff:
+Run these checks from the repository root with Python 3.10+, then inspect the diff:
 
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 tests/check_docs.py
 ```
 
-These checks validate documentation and exercise shell snippets with mocked tools; they do not verify real Windows, WSL, or macOS setup. Missing shell runtimes are reported as skipped. External URLs are not checked.
+These checks validate documentation and test the documentation checker; they do not execute tool installation or shell configuration, or verify real Windows, WSL, or macOS setup. External URLs are not checked.
 
 Report meaningful behavior changes, actual check results, and skips in the pull request or handoff. Record the platform, versions, date, and results for manual verification; never invent test results or compatibility claims.
 

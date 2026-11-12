@@ -2,20 +2,20 @@
 
 Use this checklist after the relevant setup steps. Repository checks and workstation checks are separate: passing one does not prove the other works.
 
-**Prerequisites:** A repository checkout, Python 3.10+ and Bash for static checks, and the relevant Windows/Ubuntu tools for manual checks.
+**Prerequisites:** A repository checkout, Python 3.10+ for static checks, and the relevant Windows/Ubuntu tools for manual checks.
 **Results:** Record each layer as `pass`, `fail`, `skipped`, or `needs manual action`, with the tested platform, versions, and date.
 **Safety:** Static checks read repository content. Some optional workstation checks below restart WSL, mount filesystems, start tmux sessions, or execute Neovim configuration. Review the corresponding setup and rollback instructions first. Never publish logs containing credentials, tokens, private hostnames, or private machine paths.
 
 ## Repository checks
 
-Run from the repository root in Ubuntu/WSL or another environment with Python and Bash:
+Run from the repository root in Ubuntu/WSL or another environment with Python 3.10+:
 
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 tests/check_docs.py
 ```
 
-Expected result: unit tests pass, and the documentation checker reports valid local links, anchors, and repository command paths. Shell snippet tests use mocked tools; unavailable shell runtimes are reported as skipped. These checks do not install software or validate a real Windows/WSL workstation. External URLs and archived historical records are outside their scope.
+Expected result: unit tests pass, and the documentation checker reports valid local links, anchors, and repository command paths. These checks do not install software or validate a real Windows/WSL workstation. External URLs and archived historical records are outside their scope.
 
 Before committing, review the staged changes. Recognize Windows CRLF line endings without rewriting historical files:
 
