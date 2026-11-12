@@ -17,3 +17,7 @@ Thumbs.db
 
 .codex
 .agents
+
+# Python validation cache
+__pycache__/
+*.py[cod]
