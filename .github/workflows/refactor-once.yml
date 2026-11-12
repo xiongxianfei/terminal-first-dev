@@ -17,6 +17,8 @@ jobs:
     if: github.repository == 'xiongxianfei/terminal-first-windows-dev' && github.ref == 'refs/heads/refactor/personal-knowledge-base-20261112'
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -28,6 +30,14 @@ jobs:
           set -euo pipefail
           git switch -C refactor/personal-knowledge-base-20261112
           python3 .github/refactor_once.py
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('docs/windows/wsl-troubleshooting.md')
+          text = path.read_text(encoding='utf-8')
+          heading = '## Migration/import-in-place recovery'
+          assert text.count(heading) == 1
+          path.write_text(text.replace(heading, '<a id="migration-import-in-place-recovery"></a>\n\n' + heading), encoding='utf-8')
+          PY
           python3 -m unittest discover -s tests -p 'test_*.py' -v
           python3 tests/check_docs.py
           count=0
