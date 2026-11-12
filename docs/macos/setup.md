@@ -12,11 +12,11 @@ This is the macOS setup path within the shared [Terminal-First Development Notes
 
 Imported from [terminal-first-macos-dev at commit 8d3521798dde](https://github.com/xiongxianfei/terminal-first-macos-dev/tree/8d3521798dde9af1aec1d803591eda1fbacbf18f) on November 12, 2026. This is a content-only import; source commit history remains in the original repository. The import does not constitute a manual setup test.
 
-| Source path | Maintained destination |
+| Source path | Destination or status |
 | --- | --- |
 | `docs/guides/macbook-terminal-baseline.md` | [setup.md](setup.md) |
 | `docs/verification/macbook-terminal-baseline.md` | [verification.md](verification.md) |
-| `tests/markdown/macbook-setup-best-practices.test.sh` | [macos.test.sh](../../tests/markdown/macos.test.sh) |
+| `tests/markdown/macbook-setup-best-practices.test.sh` | Previously imported as `tests/markdown/macos.test.sh`; retired with the Markdown content checks |
 
 Copyright 2026 xiongxianfei. The imported material retains its [Apache-2.0 license](../../LICENSE); the [source license](https://github.com/xiongxianfei/terminal-first-macos-dev/blob/8d3521798dde9af1aec1d803591eda1fbacbf18f/LICENSE) records the same notice. Navigation and repository-boundary wording have been adapted; workstation command blocks are unchanged.
 
