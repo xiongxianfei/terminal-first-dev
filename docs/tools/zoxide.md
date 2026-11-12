@@ -32,27 +32,32 @@ fzf shell keybindings and the PowerShell PSFzf module are **not required by `zi`
 
 ## Use and verify
 
-First visit a real directory normally and let the next prompt appear, or explicitly seed the database:
+First visit a real project directory normally and let the next prompt appear, or explicitly seed the database. The home directory itself is excluded by default; use an existing non-excluded project path and adapt the example checkout location:
 
 ```bash
 # Bash or Zsh
-cd "$HOME"
+cd "$HOME/src/terminal-first-dev"
 zoxide add "$PWD"
 zoxide query --list
-z "$HOME"
+cd "$HOME"
+z terminal-first-dev
+pwd
 ```
 
-For learned navigation, use a distinctive fragment of an actual path shown by `zoxide query --list`, then confirm the resulting working directory. The project names below are examples, not directories created by this guide.
+Expected result: the project appears in the directory list, and the final working directory is the intended checkout. If several paths share that name, narrow the query using another distinctive path fragment.
 
-PowerShell seed example:
+PowerShell equivalent:
 
 ```powershell
-Set-Location $HOME
+Set-Location 'C:\src\terminal-first-dev'
 zoxide add (Get-Location).Path
 zoxide query --list
+Set-Location $HOME
+z terminal-first-dev
+Get-Location
 ```
 
-Use `z project` to jump by a directory-name fragment, `z project api` to narrow the match, and `zi` to select from learned directories. Press Escape to cancel the picker. An empty database is not an installation failure.
+Use `z project` to jump by a directory-name fragment, `z project api` to narrow the match, and `zi` to select from learned directories. Press Escape to cancel the picker. An empty database is not an installation failure; example project names are not directories created by this guide.
 
 ## Troubleshooting and rollback
 
@@ -60,7 +65,7 @@ Use `z project` to jump by a directory-name fragment, `z project api` to narrow 
 | --- | --- |
 | `zoxide` works but `z` is unknown | Confirm the correct shell profile sources the snippet; restart the shell. |
 | `zi` fails but `z` works | Run `fzf --version`; inspect PATH for an old binary and check the minimum above. |
-| A directory never appears | Visit it and reach another prompt, or use `zoxide add` with its actual path. |
+| A directory never appears | Check `_ZO_EXCLUDE_DIRS` (the home directory is excluded by default); visit a non-excluded path or use `zoxide add` with its actual path. |
 | Existing `z` or prompt behavior changes | Remove duplicate initialization or the conflicting alias; restore the backed-up profile and start a fresh shell. |
 
 Remove the snippet's source line and restart to undo integration. Uninstall through the original channel: `winget uninstall --id ajeetdsouza.zoxide --exact`, `sudo apt remove zoxide`, or `brew uninstall zoxide`. Uninstalling is not a promise that local history is erased.
