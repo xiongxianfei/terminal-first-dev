@@ -41,6 +41,8 @@ done
 
 The Python checker validates maintained Markdown titles, local file links, and heading anchors. Link parsing skips code examples; a separate check validates literal repository file paths used by `test -f`, `bash`, and `python3` commands, including examples. Shell checks cover Windows/WSL, Ubuntu safety guidance, Neovim/tmux configurations, and macOS prerequisites, setup order, and verification boundaries. They do not execute setup commands.
 
+The Python suite also exercises the navigation snippets with mocked tools and temporary homes. Missing shell runtimes are reported as skipped. CI adds macOS Bash/Zsh checks and Windows PowerShell checks so all three snippets are exercised. To run the standalone PowerShell cases, use `pwsh -NoProfile -NonInteractive -File tests/shell/navigation.ps1`; no Pester module or real zoxide/fzf installation is required.
+
 External URLs and historical records are not revalidated. These checks do not prove that Windows, WSL, macOS, package installation, networking, or editor startup works. Report any manual checks separately. The macOS record remains explicitly unverified until a real walkthrough is recorded.
 
 ## Changes
