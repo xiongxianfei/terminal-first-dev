@@ -1,0 +1,26 @@
+name: Documentation checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Test the Markdown checker
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Check local documentation links and anchors
+        run: python3 tests/check_docs.py
+      - name: Check retained setup and configuration guidance
+        shell: bash
+        run: |
+          set -euo pipefail
+          for test in tests/markdown/*.test.sh; do
+            echo "RUN: $test"
+            bash "$test"
+          done

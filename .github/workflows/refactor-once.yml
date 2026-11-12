@@ -1,0 +1,52 @@
+name: One-time knowledge-base refactor
+on:
+  push:
+    branches: [refactor/personal-knowledge-base-20261112]
+    paths:
+      - .github/refactor_once.py
+      - .github/workflows/refactor-once.yml
+      - tests/check_docs.py
+      - tests/test_check_docs.py
+permissions:
+  contents: write
+concurrency:
+  group: personal-knowledge-base-refactor-20261112
+  cancel-in-progress: false
+jobs:
+  refactor:
+    if: github.repository == 'xiongxianfei/terminal-first-windows-dev' && github.ref == 'refs/heads/refactor/personal-knowledge-base-20261112'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Apply and validate the documentation-only migration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git switch -C refactor/personal-knowledge-base-20261112
+          python3 .github/refactor_once.py
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+          python3 tests/check_docs.py
+          count=0
+          for test in tests/markdown/*.test.sh; do
+            echo "RUN: $test"
+            bash "$test"
+            count=$((count + 1))
+          done
+          test "$count" -eq 3
+          git diff --exit-code 8f22389e563a6b1376a36eef74b26e36bd6a3659 -- config .gitignore LICENSE CODE_OF_CONDUCT.md SECURITY.md
+          git add -A
+          git diff --cached --check
+          git diff --cached --stat
+      - name: Commit only to the dedicated refactor branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = refactor/personal-knowledge-base-20261112
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'refactor: organize personal development knowledge base'
+          git push origin HEAD:refs/heads/refactor/personal-knowledge-base-20261112
