@@ -9,9 +9,11 @@ A personal knowledge base for terminal-first development across Windows, Linux, 
 | Windows | [Host and PowerShell setup](docs/windows/setup.md), [WSL2 Ubuntu](docs/windows/wsl.md), [WSL troubleshooting](docs/windows/wsl-troubleshooting.md), [verification](docs/windows/verification.md) |
 | Linux | [Ubuntu baseline](docs/linux/ubuntu-setup.md) — currently written for Ubuntu in WSL2 |
 | macOS | [MacBook terminal baseline](docs/macos/setup.md), [verification record](docs/macos/verification.md) — manual verification is not complete |
-| Tools | [Neovim](docs/tools/neovim.md), [tmux](docs/tools/tmux.md), [uv](docs/tools/uv.md) |
+| Tools | [Neovim](docs/tools/neovim.md), [tmux](docs/tools/tmux.md), [uv](docs/tools/uv.md), [zoxide](docs/tools/zoxide.md), [fzf](docs/tools/fzf.md) |
 | Networking | [WSL proxy setup and troubleshooting](docs/networking/proxy.md) |
-| Configuration | [Neovim](config/nvim/init.lua), [tmux](config/tmux/tmux.conf) — canonical reusable files; not newly validated for macOS |
+| Configuration | [Neovim](config/nvim/init.lua), [tmux](config/tmux/tmux.conf), [shell navigation snippets](docs/tools/fzf.md#enable-the-shared-shell-snippet) — canonical reusable files; check each platform's verification boundary |
+
+Optional navigation: install [zoxide](docs/tools/zoxide.md) and [fzf](docs/tools/fzf.md), then enable one shell-specific snippet. These tools are not required by either setup path. PowerShell fzf keybindings require an additional explicit PSFzf opt-in; `zi` does not require that module.
 
 ## Windows/WSL setup path
 
