@@ -21,3 +21,9 @@ Thumbs.db
 # Python validation cache
 __pycache__/
 *.py[cod]
+
+# Additional local AI workspace state from the macOS notes
+/.claude/
+/.cursor/
+/windsurf/
+/.gemini/
