@@ -59,7 +59,7 @@
 
 ### 1. Verify the active guide paths exist
 
-The verification guide is a proof surface, not a setup guide. It can link active verification targets only when the path exists after this slice. Targets that are missing or not yet converted belong in `docs/changes/2026-06-16-remaining-guides-template-rollout/verification-target-inventory.md` as unresolved follow-ups.
+The verification guide is a proof surface, not a setup guide. It can link active verification targets only when the path exists after this slice. Targets that are missing or not yet converted belong in `archive/legacy/docs/changes/2026-06-16-remaining-guides-template-rollout/verification-target-inventory.md` as unresolved follow-ups.
 
 Run from Ubuntu:
 
@@ -73,19 +73,19 @@ test -f docs/guides/05-tmux.md
 test -f docs/guides/06-uv.md
 ```
 
-Expected result: every active verification reference exists. The old WSL compatibility path remains `docs/guides/02-wsl2-ubuntu.md`, but verification should use the install and migration task guides.
+Expected result: every active verification reference exists. The old WSL compatibility path remains `docs/windows/wsl.md`, but verification should use the install and migration task guides.
 
 Active verification references:
 
-- [Windows host](01-windows-host.md)
+- [Windows host](setup.md)
 - [WSL Ubuntu install](wsl-ubuntu-install.md)
 - [WSL Ubuntu migration](wsl-ubuntu-migration.md)
-- [Proxy setup](proxy-setup.md)
-- [Neovim setup](04-neovim.md)
-- [tmux setup](05-tmux.md)
-- [uv setup](06-uv.md)
+- [Proxy setup](../networking/proxy.md)
+- [Neovim setup](../tools/neovim.md)
+- [tmux setup](../tools/tmux.md)
+- [uv setup](../tools/uv.md)
 
-Unresolved verification follow-up: Ubuntu baseline remains covered by legacy checks and `docs/guides/03-ubuntu-baseline.md`, but it is not an active converted-guide verification link in this slice.
+Unresolved verification follow-up: Ubuntu baseline remains covered by legacy checks and `docs/linux/ubuntu-setup.md`, but it is not an active converted-guide verification link in this slice.
 
 ### 2. Run the static documentation checks
 
@@ -125,18 +125,18 @@ In plain text, every doctor result is one of: pass, fail, skipped, or needs manu
 
 | Layer | Environment | Active guide target | Required observation | Result states |
 | --- | --- | --- | --- | --- |
-| Windows host | Windows PowerShell | [Windows host](01-windows-host.md) | `pwsh`, `winget`, `wt`, and WSL availability commands report versions or status | `pass`, `fail`, `skipped`, `needs manual action` |
+| Windows host | Windows PowerShell | [Windows host](setup.md) | `pwsh`, `winget`, `wt`, and WSL availability commands report versions or status | `pass`, `fail`, `skipped`, `needs manual action` |
 | WSL storage | Windows PowerShell | [WSL Ubuntu install](wsl-ubuntu-install.md) or [WSL Ubuntu migration](wsl-ubuntu-migration.md) | fresh install or migration uses `D:\Software\WSL\Ubuntu` and verifies the distro with `wsl --list --verbose` | `pass`, `fail`, `skipped`, `needs manual action` |
 | WSL config | Ubuntu shell and Windows PowerShell | unresolved verification follow-up | `/etc/wsl.conf` contains the documented automount and interop posture after WSL restart | `pass`, `fail`, `skipped`, `needs manual action` |
 | Ubuntu baseline | Ubuntu shell | unresolved verification follow-up | baseline checks can run without locale, mount, or sudoers warnings | `pass`, `fail`, `skipped`, `needs manual action` |
-| proxy | Windows PowerShell and Ubuntu shell | [Proxy setup](proxy-setup.md) | automatic proxy mirroring or manual proxy fallback supports package/network access | `pass`, `fail`, `skipped`, `needs manual action` |
+| proxy | Windows PowerShell and Ubuntu shell | [Proxy setup](../networking/proxy.md) | automatic proxy mirroring or manual proxy fallback supports package/network access | `pass`, `fail`, `skipped`, `needs manual action` |
 | data mount | Ubuntu shell | unresolved verification follow-up | `/home/<user>/data` reaches `D:\Data` through fstab or fallback symlink | `pass`, `fail`, `skipped`, `needs manual action` |
 | locale | Ubuntu shell | unresolved verification follow-up | `locale` is warning-free and `locale charmap` reports `UTF-8` | `pass`, `fail`, `skipped`, `needs manual action` |
 | sudo | Ubuntu shell | unresolved verification follow-up | optional passwordless sudo is either skipped or passes `visudo` and non-interactive sudo checks | `pass`, `fail`, `skipped`, `needs manual action` |
-| Neovim Windows | Windows PowerShell and Neovim command | [Neovim setup](04-neovim.md) | Windows Neovim reports version, starts cleanly, and has reviewed plugin and health status | `pass`, `fail`, `skipped`, `needs manual action` |
-| Neovim Ubuntu | Ubuntu shell and Neovim command | [Neovim setup](04-neovim.md) | Ubuntu Neovim reports version, starts cleanly, and has reviewed plugin and health status | `pass`, `fail`, `skipped`, `needs manual action` |
-| tmux Ubuntu | Ubuntu shell and tmux command | [tmux setup](05-tmux.md) | tmux reports version and loads the project config in a clean session | `pass`, `fail`, `skipped`, `needs manual action` |
-| uv optional tooling | Windows PowerShell or Ubuntu shell | [uv setup](06-uv.md) | uv is either intentionally skipped or reports its version and package-source posture | `pass`, `fail`, `skipped`, `needs manual action` |
+| Neovim Windows | Windows PowerShell and Neovim command | [Neovim setup](../tools/neovim.md) | Windows Neovim reports version, starts cleanly, and has reviewed plugin and health status | `pass`, `fail`, `skipped`, `needs manual action` |
+| Neovim Ubuntu | Ubuntu shell and Neovim command | [Neovim setup](../tools/neovim.md) | Ubuntu Neovim reports version, starts cleanly, and has reviewed plugin and health status | `pass`, `fail`, `skipped`, `needs manual action` |
+| tmux Ubuntu | Ubuntu shell and tmux command | [tmux setup](../tools/tmux.md) | tmux reports version and loads the project config in a clean session | `pass`, `fail`, `skipped`, `needs manual action` |
+| uv optional tooling | Windows PowerShell or Ubuntu shell | [uv setup](../tools/uv.md) | uv is either intentionally skipped or reports its version and package-source posture | `pass`, `fail`, `skipped`, `needs manual action` |
 
 #### Windows host checks
 
@@ -286,7 +286,7 @@ Expected result: tmux Ubuntu is `pass` when `tmux -V` works and the config loads
 
 ## Publication gate
 
-Before publishing a release or treating the guide as final, maintainers must record tested versions in `docs/release-notes/2026-05-24-tested-versions.md` or a newer release note.
+Before publishing a release or treating the guide as final, maintainers must record tested versions in `archive/legacy/docs/release-notes/2026-05-24-tested-versions.md` or a newer release note.
 
 The version policy is latest stable at setup time, not preview or nightly. Pin only where reproducibility matters, such as Neovim plugin lockfiles.
 
@@ -344,7 +344,7 @@ Rollback coverage must exist for:
 
 Use the targeted entry that matches the symptom:
 
-- WSL install, migration, or storage verification fails: [WSL issues](../troubleshooting/wsl.md)
-- Proxy verification fails: [Proxy and certificate issues](../troubleshooting/proxy.md)
-- Ubuntu baseline verification fails: [Ubuntu baseline issues](../troubleshooting/ubuntu-baseline.md)
-- Enterprise policy blocks Windows host verification: [Enterprise policy issues](../troubleshooting/enterprise-policy.md)
+- WSL install, migration, or storage verification fails: [WSL issues](wsl-troubleshooting.md)
+- Proxy verification fails: [Proxy and certificate issues](../networking/proxy.md#proxy-troubleshooting)
+- Ubuntu baseline verification fails: [Ubuntu baseline issues](../linux/ubuntu-setup.md#ubuntu-baseline-troubleshooting)
+- Enterprise policy blocks Windows host verification: [Enterprise policy issues](setup.md#enterprise-policy-troubleshooting)

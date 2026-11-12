@@ -17,7 +17,7 @@ Use WSL automatic proxy mirroring as the primary path via `%UserProfile%\.wslcon
 autoProxy=true
 ```
 
-Document manual environment-variable fallback guidance. Defer PAC files from the first slice. Keep corporate CA certificate handling manual and troubleshooting-only, governed by [ADR: WSL Certificate Trust Policy](2026-05-25-wsl-certificate-trust-policy.md).
+Document manual environment-variable fallback guidance. Defer PAC files from the first slice. Keep corporate CA certificate handling manual and troubleshooting-only, governed by [ADR: WSL Certificate Trust Policy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-25-wsl-certificate-trust-policy.md).
 
 ## Alternatives Considered
 

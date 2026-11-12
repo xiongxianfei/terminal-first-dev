@@ -98,7 +98,7 @@ uv --version
 
 Expected result: `uv` prints its installed version.
 
-If HTTPS access fails from Ubuntu, use [WSL SSL certificate trust fails](../troubleshooting/proxy.md#wsl-ssl-certificate-trust-fails).
+If HTTPS access fails from Ubuntu, use [WSL SSL certificate trust fails](../networking/proxy.md#wsl-ssl-certificate-trust-fails).
 
 ### 4. Update uv
 
@@ -188,5 +188,5 @@ Remove the installed `uv` binary through the same install channel used to instal
 
 Use the targeted entry that matches the symptom:
 
-- Windows installer or package source is blocked by policy: [Enterprise policy issues](../troubleshooting/enterprise-policy.md)
-- Ubuntu HTTPS package access fails: [WSL SSL certificate trust fails](../troubleshooting/proxy.md#wsl-ssl-certificate-trust-fails)
+- Windows installer or package source is blocked by policy: [Enterprise policy issues](../windows/setup.md#enterprise-policy-troubleshooting)
+- Ubuntu HTTPS package access fails: [WSL SSL certificate trust fails](../networking/proxy.md#wsl-ssl-certificate-trust-fails)

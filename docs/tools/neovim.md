@@ -87,7 +87,7 @@ nvim --version
 
 Expected result: Windows Neovim prints its installed version.
 
-If WinGet or Microsoft Store/App Installer access is blocked by policy, use [Enterprise policy issues](../troubleshooting/enterprise-policy.md).
+If WinGet or Microsoft Store/App Installer access is blocked by policy, use [Enterprise policy issues](../windows/setup.md#enterprise-policy-troubleshooting).
 
 ### 2. Install Neovim on Ubuntu
 
@@ -108,7 +108,7 @@ nvim --version
 
 Expected result: Ubuntu Neovim prints its installed version.
 
-If the Ubuntu package is older than your needs, use an official Neovim release channel and record the source in verification notes. If HTTPS package access fails, use [WSL SSL certificate trust fails](../troubleshooting/proxy.md#wsl-ssl-certificate-trust-fails).
+If the Ubuntu package is older than your needs, use an official Neovim release channel and record the source in verification notes. If HTTPS package access fails, use [WSL SSL certificate trust fails](../networking/proxy.md#wsl-ssl-certificate-trust-fails).
 
 ### 3. Use the Ubuntu release-tarball fallback when needed
 
@@ -261,5 +261,5 @@ Keep plugin manager lockfiles environment-local or intentionally copied. Do not 
 
 Use the targeted entry that matches the symptom:
 
-- WinGet, Microsoft Store/App Installer, or package source is blocked: [Enterprise policy issues](../troubleshooting/enterprise-policy.md)
-- Ubuntu HTTPS package or plugin download fails: [WSL SSL certificate trust fails](../troubleshooting/proxy.md#wsl-ssl-certificate-trust-fails)
+- WinGet, Microsoft Store/App Installer, or package source is blocked: [Enterprise policy issues](../windows/setup.md#enterprise-policy-troubleshooting)
+- Ubuntu HTTPS package or plugin download fails: [WSL SSL certificate trust fails](../networking/proxy.md#wsl-ssl-certificate-trust-fails)

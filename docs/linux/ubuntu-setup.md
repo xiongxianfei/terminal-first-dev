@@ -1,5 +1,7 @@
 # Configure the Ubuntu baseline
 
+> Applies to Ubuntu in WSL2. Windows drives, `.wslconfig`, and `/etc/wsl.conf` are not general native-Linux defaults.
+
 **Prerequisites:** WSL2 Ubuntu is installed; you can open Windows PowerShell and Ubuntu; local policy allows you to review WSL, fstab, APT, locale, and sudo changes before running them.
 **Time:** 30-45 minutes, depending on which optional sections apply.
 **Outcome:** Ubuntu has reviewed proxy posture, WSL startup config, optional APT source posture, shared data access, UTF-8 locale readiness, and optional passwordless sudo status.
@@ -36,7 +38,7 @@
 
    Expected result: `%UserProfile%\.wslconfig` contains `[wsl2]` and `autoProxy=true`.
 
-   If automatic proxy mirroring is unavailable or blocked by enterprise policy, use [automatic proxy mirroring does not work](../troubleshooting/proxy.md#automatic-proxy-mirroring-does-not-work). If a manual proxy fallback would require credentials, read [manual proxy fallback cautions](../troubleshooting/proxy.md#manual-proxy-fallback-cautions) before entering anything in a shell.
+   If automatic proxy mirroring is unavailable or blocked by enterprise policy, use [automatic proxy mirroring does not work](../networking/proxy.md#automatic-proxy-mirroring-does-not-work). If a manual proxy fallback would require credentials, read [manual proxy fallback cautions](../networking/proxy.md#manual-proxy-fallback-cautions) before entering anything in a shell.
 
 2. Apply Ubuntu WSL startup posture.
 
@@ -247,7 +249,7 @@ wsl --shutdown
 
 Expected result: WSL shuts down without an error. Launch Ubuntu again before continuing.
 
-If automatic proxy mirroring is unavailable or blocked by enterprise policy, use [automatic proxy mirroring does not work](../troubleshooting/proxy.md#automatic-proxy-mirroring-does-not-work). PAC files remain a known limitation for the first implementation slice. Corporate CA certificate installation is troubleshooting-only and manual; corporate CA recovery belongs in [WSL SSL certificate trust fails](../troubleshooting/proxy.md#wsl-ssl-certificate-trust-fails).
+If automatic proxy mirroring is unavailable or blocked by enterprise policy, use [automatic proxy mirroring does not work](../networking/proxy.md#automatic-proxy-mirroring-does-not-work). PAC files remain a known limitation for the first implementation slice. Corporate CA certificate installation is troubleshooting-only and manual; corporate CA recovery belongs in [WSL SSL certificate trust fails](../networking/proxy.md#wsl-ssl-certificate-trust-fails).
 
 ### 2. Apply Ubuntu WSL startup posture
 
@@ -510,8 +512,111 @@ Doctor checks are primarily verification and should avoid broad writes. Any futu
 
 Use the targeted troubleshooting entry that matches the symptom:
 
-- Automatic proxy mirroring blocked or unavailable: [automatic proxy mirroring does not work](../troubleshooting/proxy.md#automatic-proxy-mirroring-does-not-work)
-- Proxy credentials, private hostnames, or shell-history risk: [manual proxy fallback cautions](../troubleshooting/proxy.md#manual-proxy-fallback-cautions)
-- HTTPS certificate or issuer errors: [WSL SSL certificate trust fails](../troubleshooting/proxy.md#wsl-ssl-certificate-trust-fails)
+- Automatic proxy mirroring blocked or unavailable: [automatic proxy mirroring does not work](../networking/proxy.md#automatic-proxy-mirroring-does-not-work)
+- Proxy credentials, private hostnames, or shell-history risk: [manual proxy fallback cautions](../networking/proxy.md#manual-proxy-fallback-cautions)
+- HTTPS certificate or issuer errors: [WSL SSL certificate trust fails](../networking/proxy.md#wsl-ssl-certificate-trust-fails)
 
 For fstab, locale, sudoers, or enterprise-policy failures without a matching troubleshooting anchor, stop at the failed step and use the local backup and rollback note for that step.
+
+## Ubuntu Baseline Troubleshooting
+
+### Purpose
+
+Track Ubuntu-on-WSL baseline failures for WSL config, data mount, locale, sudo, and helper write safety.
+
+### Safety notes
+
+Do not keep broken sudoers or fstab changes in place. If validation fails, remove the project-owned change or restore the backup before continuing.
+
+### WSL config changes do not apply
+
+Confirm `/etc/wsl.conf` contains the intended entries:
+
+```ini
+[automount]
+enabled=false
+mountFsTab=true
+
+[interop]
+enabled=true
+appendWindowsPath=false
+```
+
+After editing `/etc/wsl.conf`, restart WSL from Windows PowerShell:
+
+```powershell
+wsl --shutdown
+```
+
+If Ubuntu still sees unexpected Windows path behavior, review whether another local change has overwritten `/etc/wsl.conf`.
+
+### Data mount fails
+
+If `sudo mount -a` fails, do not proceed as if `/home/<user>/data` is ready.
+
+Check:
+
+- `D:\Data` exists on Windows, or the user intentionally chose create, skip, or choose another documented path.
+- `/home/<user>/data` exists inside Ubuntu.
+- `/etc/fstab` contains the project-owned `D:/Data` entry with the correct Ubuntu username.
+- The installed WSL version supports direct DrvFs subdirectory mounting.
+
+If direct subdirectory mounting is unreliable, remove the failing fstab entry and use the fallback symlink path documented in the Ubuntu baseline guide.
+
+### Locale warnings appear
+
+Run:
+
+```bash
+locale
+locale charmap
+```
+
+Healthy output is UTF-8 and warning-free. `C.UTF-8` is the default healthy target, but user-selected UTF-8 locales are acceptable when they do not emit warnings.
+
+Repair to the project default:
+
+```bash
+sudo update-locale LANG=C.UTF-8 LC_ALL=
+exec "$SHELL" -l
+locale
+locale charmap
+```
+
+If warnings continue, check for user profile overrides:
+
+```bash
+grep -nE '^(export )?(LANG|LC_[A-Z_]+)=' ~/.profile ~/.bashrc ~/.zshrc 2>/dev/null || true
+```
+
+Remove stale overrides that reference unavailable locales. For a regional UTF-8 locale, install locale support, generate the locale, and then select it:
+
+```bash
+sudo apt update
+sudo apt install -y locales
+sudo locale-gen en_US.UTF-8
+sudo update-locale LANG=en_US.UTF-8 LC_ALL=
+exec "$SHELL" -l
+```
+
+### Sudoers validation fails
+
+If `sudo visudo -cf /etc/sudoers.d/terminal-first-windows-dev` fails, remove the project-owned sudoers drop-in and do not treat passwordless sudo as enabled.
+
+```bash
+sudo rm -f /etc/sudoers.d/terminal-first-windows-dev
+sudo visudo -c
+```
+
+Passwordless sudo is optional. Skipping it is a valid setup state and should be reported as `skipped` by future doctor checks.
+
+### Helper write disclosure
+
+Any future Ubuntu helper that writes files must show:
+
+- target path;
+- backup behavior;
+- rollback behavior;
+- whether the write is user-local or machine-wide.
+
+Helpers must not silently edit `/etc/wsl.conf`, `/etc/fstab`, sudoers, proxy profile files, or shell startup files.

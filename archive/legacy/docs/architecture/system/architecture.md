@@ -33,7 +33,7 @@ Primary goals:
 
 The system is this repository and the setup surface it publishes. It interacts with a user's Windows 11 workstation, Microsoft WSL, Ubuntu on WSL, Windows package tooling, shell/profile files, Neovim, and tmux.
 
-C4 system context: [diagrams/context.mmd](diagrams/context.mmd)
+C4 system context: [diagrams/context.mmd](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/architecture/system/diagrams/context.mmd)
 
 Out of scope:
 
@@ -53,15 +53,15 @@ The architecture uses a layered guide plus validation model:
 
 Durable decisions are recorded in ADRs:
 
-- [ADR: Version and Package Policy](../../adr/2026-05-24-version-and-package-policy.md)
-- [ADR: WSL Storage and Data Mount Policy](../../adr/2026-05-24-wsl-storage-and-data-mount-policy.md)
-- [ADR: Proxy Strategy](../../adr/2026-05-24-proxy-strategy.md)
-- [ADR: WSL Certificate Trust Policy](../../adr/2026-05-25-wsl-certificate-trust-policy.md)
-- [ADR: Neovim Plugin Baseline](../../adr/2026-05-24-neovim-plugin-baseline.md)
+- [ADR: Version and Package Policy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-24-version-and-package-policy.md)
+- [ADR: WSL Storage and Data Mount Policy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-24-wsl-storage-and-data-mount-policy.md)
+- [ADR: Proxy Strategy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-24-proxy-strategy.md)
+- [ADR: WSL Certificate Trust Policy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-25-wsl-certificate-trust-policy.md)
+- [ADR: Neovim Plugin Baseline](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-24-neovim-plugin-baseline.md)
 
 ## 5. Building Block View
 
-C4 container view: [diagrams/container.mmd](diagrams/container.mmd)
+C4 container view: [diagrams/container.mmd](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/architecture/system/diagrams/container.mmd)
 
 Repository containers:
 
@@ -143,11 +143,11 @@ Observability:
 
 ADRs:
 
-- [ADR: Version and Package Policy](../../adr/2026-05-24-version-and-package-policy.md)
-- [ADR: WSL Storage and Data Mount Policy](../../adr/2026-05-24-wsl-storage-and-data-mount-policy.md)
-- [ADR: Proxy Strategy](../../adr/2026-05-24-proxy-strategy.md)
-- [ADR: WSL Certificate Trust Policy](../../adr/2026-05-25-wsl-certificate-trust-policy.md)
-- [ADR: Neovim Plugin Baseline](../../adr/2026-05-24-neovim-plugin-baseline.md)
+- [ADR: Version and Package Policy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-24-version-and-package-policy.md)
+- [ADR: WSL Storage and Data Mount Policy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-24-wsl-storage-and-data-mount-policy.md)
+- [ADR: Proxy Strategy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-24-proxy-strategy.md)
+- [ADR: WSL Certificate Trust Policy](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-25-wsl-certificate-trust-policy.md)
+- [ADR: Neovim Plugin Baseline](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/adr/2026-05-24-neovim-plugin-baseline.md)
 
 ## 10. Quality Requirements
 

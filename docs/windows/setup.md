@@ -4,7 +4,7 @@
 **Time:** 10-15 minutes, plus any organization approval time for blocked package sources.
 **Outcome:** Windows Terminal, PowerShell, WinGet, and WSL availability are visible before WSL or Ubuntu setup continues.
 **Verify:** `pwsh --version`, `winget --version`, `wt --version`, and `wsl --version` or `wsl --status` report the host state.
-**Scope:** Windows host baseline for terminal-first setup. This guide remains one host guide during body conformance.
+**Scope:** Windows host baseline for terminal-first setup.
 **Safety:** Package-manager and WSL commands may prompt for administrator elevation or be blocked by enterprise policy. Do not run all install commands from an elevated shell by default.
 
 ## Fast path
@@ -93,7 +93,7 @@ winget upgrade --id Microsoft.PowerShell --source winget
 
 Expected result: WinGet upgrades PowerShell or reports that no applicable update is available.
 
-If `winget` is unavailable or blocked, use the policy-approved manual package path for the machine and record the source used in verification notes. If package source or Store/App Installer policy blocks the command, use [Enterprise policy issues](../troubleshooting/enterprise-policy.md).
+If `winget` is unavailable or blocked, use the policy-approved manual package path for the machine and record the source used in verification notes. If package source or Store/App Installer policy blocks the command, use [Enterprise policy issues](#enterprise-policy-troubleshooting).
 
 ### 2. Verify host tooling
 
@@ -212,5 +212,21 @@ Rollback: this guide does not change execution policy or Windows Terminal settin
 
 Use the targeted entry that matches the symptom:
 
-- WinGet, Microsoft Store/App Installer, WSL availability, Windows Terminal, or package sources are blocked by policy: [Enterprise policy issues](../troubleshooting/enterprise-policy.md)
-- WSL update or availability checks fail through network policy: [WSL update fails through Microsoft Store](../troubleshooting/wsl.md#wsl-update-fails-through-microsoft-store)
+- WinGet, Microsoft Store/App Installer, WSL availability, Windows Terminal, or package sources are blocked by policy: [Enterprise policy issues](#enterprise-policy-troubleshooting)
+- WSL update or availability checks fail through network policy: [WSL update fails through Microsoft Store](wsl-troubleshooting.md#wsl-update-fails-through-microsoft-store)
+
+## Enterprise Policy Troubleshooting
+
+### Purpose
+
+Track setup areas that may be blocked or changed by managed Windows policy.
+
+### Current scope
+
+M1 records this placeholder so the guide has a stable destination for policy caveats. Later milestones will add concrete notes for WinGet, App Installer, Store access, WSL feature availability, package sources, proxy behavior, corporate certificate trust, and elevation prompts.
+
+### Safety notes
+
+Do not work around organization policy without approval from the device owner or administrator.
+
+If WSL HTTPS fails because Ubuntu does not trust a corporate root certificate, use the manual certificate export/import path in `docs/networking/proxy.md` only when the device owner or administrator allows copying Windows-managed trust roots into WSL.

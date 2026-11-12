@@ -35,7 +35,7 @@
 
    Expected result: export succeeds, and the VHDX exists at `D:\Software\WSL\Ubuntu\ext4.vhdx`.
 
-   If export fails, stop and use [Migration/import-in-place recovery](../troubleshooting/wsl.md#migration-import-in-place-recovery).
+   If export fails, stop and use [Migration/import-in-place recovery](wsl-troubleshooting.md#migration-import-in-place-recovery).
 
 3. Unregister the old distro only after export verification.
 
@@ -64,7 +64,7 @@
 
    Expected result: the imported distro appears in the verbose list, is available as the default Ubuntu distro, and launches successfully.
 
-   If import or launch fails, use [Migration/import-in-place recovery](../troubleshooting/wsl.md#migration-import-in-place-recovery).
+   If import or launch fails, use [Migration/import-in-place recovery](wsl-troubleshooting.md#migration-import-in-place-recovery).
 
 ## Walkthrough
 
@@ -108,7 +108,7 @@ Expected result: `D:\Software\WSL\Ubuntu\ext4.vhdx` exists and has a size consis
 - Backup: the verified VHDX is the backup/export artifact for this migration.
 - Rollback: if export fails, keep the existing registered distro and do not unregister it.
 
-If export fails, use [Migration/import-in-place recovery](../troubleshooting/wsl.md#migration-import-in-place-recovery).
+If export fails, use [Migration/import-in-place recovery](wsl-troubleshooting.md#migration-import-in-place-recovery).
 
 ### 3. Unregister the old distro only after export verification
 
@@ -150,7 +150,7 @@ wsl -d Ubuntu
 
 Expected result: the imported distro appears in `wsl --list --verbose`, launches successfully, and is the intended default distro after `wsl --set-default Ubuntu`.
 
-If import-in-place fails, preserve `D:\Software\WSL\Ubuntu\ext4.vhdx` and use [Migration/import-in-place recovery](../troubleshooting/wsl.md#migration-import-in-place-recovery).
+If import-in-place fails, preserve `D:\Software\WSL\Ubuntu\ext4.vhdx` and use [Migration/import-in-place recovery](wsl-troubleshooting.md#migration-import-in-place-recovery).
 
 ## Rollback
 
@@ -164,6 +164,6 @@ If import-in-place fails, preserve `D:\Software\WSL\Ubuntu\ext4.vhdx` and use [M
 
 Use the targeted entry that matches the symptom:
 
-- Export fails or the VHDX is missing: [Migration/import-in-place recovery](../troubleshooting/wsl.md#migration-import-in-place-recovery)
-- Import-in-place fails: [Migration/import-in-place recovery](../troubleshooting/wsl.md#migration-import-in-place-recovery)
-- Storage path is unclear: [Storage path checks](../troubleshooting/wsl.md#storage-path-checks)
+- Export fails or the VHDX is missing: [Migration/import-in-place recovery](wsl-troubleshooting.md#migration-import-in-place-recovery)
+- Import-in-place fails: [Migration/import-in-place recovery](wsl-troubleshooting.md#migration-import-in-place-recovery)
+- Storage path is unclear: [Storage path checks](wsl-troubleshooting.md#storage-path-checks)

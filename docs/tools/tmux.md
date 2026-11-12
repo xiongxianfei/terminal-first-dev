@@ -178,5 +178,5 @@ Restore the backed-up `~/.tmux.conf` or remove the project-owned tmux config fil
 
 Use the targeted entry that matches the symptom:
 
-- Package installation fails in a managed environment: [Enterprise policy issues](../troubleshooting/enterprise-policy.md)
-- HTTPS package access fails in Ubuntu: [WSL SSL certificate trust fails](../troubleshooting/proxy.md#wsl-ssl-certificate-trust-fails)
+- Package installation fails in a managed environment: [Enterprise policy issues](../windows/setup.md#enterprise-policy-troubleshooting)
+- HTTPS package access fails in Ubuntu: [WSL SSL certificate trust fails](../networking/proxy.md#wsl-ssl-certificate-trust-fails)

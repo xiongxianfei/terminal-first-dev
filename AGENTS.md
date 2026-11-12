@@ -1,16 +1,12 @@
 # Agent Guide
 
-This repository is governed by `CONSTITUTION.md`. Read it before making behavior-changing edits.
+This is a personal development knowledge base, organized by platform and tool. The [README](README.md) is the current scope and navigation; [CONTRIBUTING](CONTRIBUTING.md) describes editing and checks.
 
-## Operating Rules
-
-- Keep the project aligned with `VISION.md`: concise, terminal-first Windows 11 development setup guidance.
-- Preserve unrelated user changes and avoid broad rewrites.
-- Use specs before changing setup behavior, executable scripts, command defaults, security posture, or compatibility assumptions.
-- Use tests, dry-runs, linting, link checks, or documented manual walkthroughs as evidence before completion claims.
-- Call out assumptions around Windows policy, administrator privileges, package sources, credentials, and machine-wide changes.
-- Do not claim CI or setup commands passed unless the relevant check was actually run.
-
-## Current Shape
-
-The project is documentation-first. There are no established build, test, package, or CI commands yet. If a change introduces them, update the durable docs and report the new validation path.
+- Keep changes small. Prefer an existing topic over a new folder or duplicate note.
+- Keep reusable configurations in `config/`; do not change their behavior during a documentation-only reorganization.
+- Keep platform assumptions explicit. WSL-specific settings are not generic Linux defaults; planned macOS support is not tested guidance.
+- Keep elevation, destructive actions, trust changes, and machine-wide effects visible beside the relevant commands. Preserve prerequisites, backups, verification, and rollback guidance.
+- Never commit secrets, credentials, private machine identifiers, or exported certificate material.
+- Record meaningful behavior changes and validation in the pull request. Notes do not require separate proposals, specifications, architecture documents, or review logs.
+- Run the documented checks and inspect the diff. Distinguish static documentation checks from actual Windows/WSL execution; never invent test results.
+- `archive/legacy/` contains historical evidence, not active instructions or governing rules. Do not rewrite its historical claims to look current.

@@ -20,7 +20,7 @@
 
    Expected result: WSL prints version and help output. The help output includes `--install`, `--distribution`, and `--location`.
 
-   If `--location` is missing, use [Unsupported fresh install-location command](../troubleshooting/wsl.md#unsupported-fresh-install-location-command).
+   If `--location` is missing, use [Unsupported fresh install-location command](wsl-troubleshooting.md#unsupported-fresh-install-location-command).
 
 2. Choose an explicit Ubuntu LTS distro.
 
@@ -56,7 +56,7 @@
 
    Expected result: WSL installs the selected distro into `D:\Software\WSL\Ubuntu` and launches first-run Ubuntu setup.
 
-   If the install download hangs or Store delivery is blocked, use [WSL install download hangs](../troubleshooting/wsl.md#wsl-install-download-hangs).
+   If the install download hangs or Store delivery is blocked, use [WSL install download hangs](wsl-troubleshooting.md#wsl-install-download-hangs).
 
 5. Verify launch and registration.
 
@@ -112,7 +112,7 @@ wsl --version
 
 Expected result: WSL updates through web download and reports the updated version.
 
-If `--location` is still missing, stop the fresh custom-location path and use [Unsupported fresh install-location command](../troubleshooting/wsl.md#unsupported-fresh-install-location-command). Do not publish or use an ambiguous positional install-location form as the primary command.
+If `--location` is still missing, stop the fresh custom-location path and use [Unsupported fresh install-location command](wsl-troubleshooting.md#unsupported-fresh-install-location-command). Do not publish or use an ambiguous positional install-location form as the primary command.
 
 ### 2. Choose an explicit Ubuntu LTS distro
 
@@ -164,7 +164,7 @@ wsl --install --web-download --distribution <UbuntuLtsDistroName> --location "D:
 
 Expected result: WSL uses the web-download path while preserving the same explicit distro and install location.
 
-If this still fails, use [WSL install download hangs](../troubleshooting/wsl.md#wsl-install-download-hangs).
+If this still fails, use [WSL install download hangs](wsl-troubleshooting.md#wsl-install-download-hangs).
 
 ### 5. Verify launch and registration
 
@@ -184,7 +184,7 @@ Record:
 - `wsl --list --verbose` output;
 - the best available non-destructive storage-location check for the current WSL version.
 
-If storage is unclear, use [Storage path checks](../troubleshooting/wsl.md#storage-path-checks).
+If storage is unclear, use [Storage path checks](wsl-troubleshooting.md#storage-path-checks).
 
 ## Rollback
 
@@ -196,7 +196,7 @@ If storage is unclear, use [Storage path checks](../troubleshooting/wsl.md#stora
 
 Use the targeted entry that matches the symptom:
 
-- WSL help does not show `--location`: [Unsupported fresh install-location command](../troubleshooting/wsl.md#unsupported-fresh-install-location-command)
-- WSL update fails through Store delivery: [WSL update fails through Microsoft Store](../troubleshooting/wsl.md#wsl-update-fails-through-microsoft-store)
-- WSL install download hangs: [WSL install download hangs](../troubleshooting/wsl.md#wsl-install-download-hangs)
-- Storage path is unclear: [Storage path checks](../troubleshooting/wsl.md#storage-path-checks)
+- WSL help does not show `--location`: [Unsupported fresh install-location command](wsl-troubleshooting.md#unsupported-fresh-install-location-command)
+- WSL update fails through Store delivery: [WSL update fails through Microsoft Store](wsl-troubleshooting.md#wsl-update-fails-through-microsoft-store)
+- WSL install download hangs: [WSL install download hangs](wsl-troubleshooting.md#wsl-install-download-hangs)
+- Storage path is unclear: [Storage path checks](wsl-troubleshooting.md#storage-path-checks)

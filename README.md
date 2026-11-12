@@ -1,52 +1,31 @@
-# Terminal-First Windows Dev
+# Terminal-First Development Notes
 
-<!-- vision:start -->
-This is a concise developer setup guide for building a terminal-first Windows 11 development environment.
+A personal knowledge base for terminal-first development: setup, configuration, daily use, and troubleshooting. Organize notes by **platform or tool**, not by project phase.
 
-It differs from broad Windows setup guides and personal bootstrap projects by choosing a short, opinionated path over exhaustive coverage or opaque automation.
+## Topics
 
-It is for developers who use Windows 11 as their primary or regular workstation and want the terminal to be the center of daily development.
+| Area | Notes |
+| --- | --- |
+| Windows | [Host and PowerShell setup](docs/windows/setup.md), [WSL2 Ubuntu](docs/windows/wsl.md), [WSL troubleshooting](docs/windows/wsl-troubleshooting.md), [verification](docs/windows/verification.md) |
+| Linux | [Ubuntu baseline](docs/linux/ubuntu-setup.md) — currently written for Ubuntu in WSL2 |
+| Tools | [Neovim](docs/tools/neovim.md), [tmux](docs/tools/tmux.md), [uv](docs/tools/uv.md) |
+| Networking | [WSL proxy setup and troubleshooting](docs/networking/proxy.md) |
+| Configuration | [Neovim](config/nvim/init.lua), [tmux](config/tmux/tmux.conf) — canonical reusable files |
 
-See [VISION.md](VISION.md) for goals, non-goals, and falsifiability.
-<!-- vision:end -->
+## Windows/WSL setup path
 
-This repository is a verification-first playbook for setting up a practical Windows 11 workstation centered on Windows Terminal, PowerShell, WSL2 Ubuntu, Neovim, and tmux.
+For a fresh workstation: [Windows host](docs/windows/setup.md) → [WSL install or migration](docs/windows/wsl.md) → [Ubuntu baseline](docs/linux/ubuntu-setup.md) → [Neovim](docs/tools/neovim.md) / [tmux](docs/tools/tmux.md) → [verification](docs/windows/verification.md). [uv](docs/tools/uv.md) is optional.
 
-It is not a one-command unattended installer. Commands and configuration changes should be readable before they are run, especially when they affect administrator permissions, WSL storage, proxy behavior, sudoers, fstab, or editor configuration.
+## Scope and verification
 
-## Setup Path
+The knowledge base can grow across Windows, Linux, and macOS. Current executable guidance is primarily Windows 11 and WSL2 Ubuntu; a planned platform is not a tested platform. Add a macOS folder only when there are actual notes to maintain.
 
-Follow the guides in order:
+Read each note's prerequisites and safety warnings. Administrator privileges, destructive operations, certificate trust, package sources, mounts, and sudoers changes require particular care. This is not an unattended installer.
 
-1. [Windows host](docs/guides/01-windows-host.md): Windows Terminal, PowerShell, package tooling, and host checks.
-2. [WSL2 Ubuntu](docs/guides/02-wsl2-ubuntu.md): explicit Ubuntu LTS selection, D-drive WSL storage, migration path, and verification.
-3. [Ubuntu baseline](docs/guides/03-ubuntu-baseline.md): proxy posture, data mount, locale, sudo profile, and Linux-side checks.
-4. [Neovim](docs/guides/04-neovim.md): Windows and Ubuntu editor setup with one concise shared config file.
-5. [tmux](docs/guides/05-tmux.md): Ubuntu tmux setup for daily terminal work.
-6. [uv](docs/guides/06-uv.md): optional Windows and Ubuntu `uv` install, update, and package-index configuration.
-7. [Verification](docs/guides/99-verification.md): consolidated checks and result vocabulary.
+The repository reorganization preserves existing commands and configurations; it does not certify their current versions or prove that setup succeeds on your machine. Use the verification steps and record the platform, versions, date, and results when you test a procedure.
 
-## Warning Labels
+## Maintenance
 
-- Administrator-sensitive: may require elevation or be blocked by enterprise policy.
-- Destructive: can remove or overwrite local state if preconditions are skipped.
-- Machine-wide: affects WSL or operating-system behavior outside one shell session.
-- User-local: affects files in the current user's profile or home directory.
-- Manual verification: must be checked on a Windows 11 or WSL machine; this repository cannot prove it from static docs alone.
+Keep one home per topic and troubleshooting next to the relevant instructions. Link to `config/` rather than copying entire configurations into notes. See [CONTRIBUTING.md](CONTRIBUTING.md) for the small note format and checks, and [AGENTS.md](AGENTS.md) for editing rules.
 
-## Scope
-
-The first slice targets Windows 11, Windows Terminal, latest stable PowerShell, WSL2 Ubuntu, Neovim on Windows and Ubuntu, and tmux on Ubuntu.
-
-It does not cover older Windows versions, arbitrary WSL storage roots, full corporate PAC or custom CA setup, language runtimes, Docker, databases, cloud tools, native Windows tmux, or a full dotfiles framework.
-
-## Troubleshooting
-
-- [Enterprise policy](docs/troubleshooting/enterprise-policy.md)
-- [Proxy limits](docs/troubleshooting/proxy.md)
-- [Ubuntu baseline](docs/troubleshooting/ubuntu-baseline.md)
-- [WSL command/version drift](docs/troubleshooting/wsl.md)
-
-## Project Workflow
-
-Project decisions are recorded in specs, architecture notes, ADRs, plans, tests, and review artifacts before implementation. Start with [CONSTITUTION.md](CONSTITUTION.md), [VISION.md](VISION.md), and [docs/workflows.md](docs/workflows.md) when contributing.
+[Historical records and old-to-new paths](archive/README.md) are preserved separately; they no longer define the active workflow.

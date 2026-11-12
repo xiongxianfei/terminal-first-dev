@@ -97,6 +97,8 @@ For this project's custom storage path, use `--location` only when the local `ws
 wsl --install --web-download --distribution <UbuntuLtsDistroName> --location "D:\Software\WSL\Ubuntu"
 ```
 
+<a id="migration-import-in-place-recovery"></a>
+
 ## Migration/import-in-place recovery
 
 The migration/import path depends on a successful export or backup before unregister.

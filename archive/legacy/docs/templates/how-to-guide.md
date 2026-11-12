@@ -43,7 +43,7 @@ Remove contributor comments and unused placeholders before publishing a guide.
 
    Expected result: <short observable result>.
 
-   If this fails with <specific symptom>, use [<targeted troubleshooting entry>](../troubleshooting/<topic>.md#<anchor>).
+   If this fails with <specific symptom>, use [<targeted troubleshooting entry>](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/troubleshooting/%3Ctopic%3E.md#<anchor>).
 
 2. <Next action-oriented step title>.
 
@@ -93,7 +93,7 @@ Verify:
 
 Expected result: <verification signal>.
 
-If this fails with <specific symptom>, use [<targeted troubleshooting entry>](../troubleshooting/<topic>.md#<anchor>).
+If this fails with <specific symptom>, use [<targeted troubleshooting entry>](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/troubleshooting/%3Ctopic%3E.md#<anchor>).
 
 ### 2. <Same next action-oriented step title>
 
@@ -129,7 +129,7 @@ The final `Troubleshooting` section is a symptom router. Deep troubleshooting be
 
 Use the targeted entry that matches the symptom:
 
-- <Symptom>: [<troubleshooting title>](../troubleshooting/<topic>.md#<anchor>)
+- <Symptom>: [<troubleshooting title>](https://github.com/xiongxianfei/terminal-first-windows-dev/blob/8f22389e563a6b1376a36eef74b26e36bd6a3659/docs/troubleshooting/%3Ctopic%3E.md#<anchor>)
 
 ## Command-block conventions
 
