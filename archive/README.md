@@ -40,6 +40,6 @@ Troubleshooting for the Windows host, Ubuntu baseline, and proxy is consolidated
 
 ## Preservation and validation
 
-All 152 baseline tracked files are accounted for by a maintained destination or historical record. Existing configuration files and executable command blocks are preserved by the migration checks. Useful Windows/WSL, Ubuntu, and Neovim/tmux checks remain under `tests/markdown/`; checks tied to the retired project workflow are archived.
+All 152 baseline tracked files are accounted for by a maintained destination or historical record. Configuration files are unchanged, and workstation setup commands keep their previous behavior. Repository-check commands use the current paths; their previous forms remain available in the baseline Git history. Useful Windows/WSL, Ubuntu, and Neovim/tmux checks remain under `tests/markdown/`; checks tied to the retired project workflow are archived.
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md#checks) for current checks and their limits. Static checks do not prove Windows/WSL setup success, and no new manual test dates are claimed.

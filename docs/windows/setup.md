@@ -217,16 +217,8 @@ Use the targeted entry that matches the symptom:
 
 ## Enterprise Policy Troubleshooting
 
-### Purpose
+Managed devices may restrict WinGet, App Installer, Store access, WSL, package sources, networking, certificate trust, or elevation. These notes do not replace your organization's policy.
 
-Track setup areas that may be blocked or changed by managed Windows policy.
+Do not work around organization policy without approval from the device owner or administrator. Use the approved installation channel and record any blocked step as requiring manual action.
 
-### Current scope
-
-M1 records this placeholder so the guide has a stable destination for policy caveats. Later milestones will add concrete notes for WinGet, App Installer, Store access, WSL feature availability, package sources, proxy behavior, corporate certificate trust, and elevation prompts.
-
-### Safety notes
-
-Do not work around organization policy without approval from the device owner or administrator.
-
-If WSL HTTPS fails because Ubuntu does not trust a corporate root certificate, use the manual certificate export/import path in `docs/networking/proxy.md` only when the device owner or administrator allows copying Windows-managed trust roots into WSL.
+If Ubuntu cannot trust an approved corporate root certificate, use the [manual certificate troubleshooting](../networking/proxy.md#wsl-ssl-certificate-trust-fails) only when the device owner or administrator permits copying Windows-managed trust roots into WSL.

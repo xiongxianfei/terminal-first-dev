@@ -122,6 +122,12 @@ def check_repo(root: Path) -> tuple[list[str], int, int]:
         title_count = len(re.findall(r"(?m)^#\s+", visible))
         if title_count != 1:
             errors.append(f"{path.relative_to(root)}: expected one top-level title, found {title_count}")
+        # Repository commands must follow moved files too, even inside code fences.
+        for match in re.finditer(r"\b(?:test[ \t]+-f|bash|python3)[ \t]+((?:docs|tests|config)/[A-Za-z0-9_./-]+)", text):
+            target = root / match[1]
+            if not target.is_file():
+                line = text[:match.start()].count("\n") + 1
+                errors.append(f"{path.relative_to(root)}:{line}: missing repository command target: {match[1]}")
         for start, end in link_spans(text):
             value = html.unescape(text[start:end])
             value = re.sub(r"\\([() ])", r"\1", value)

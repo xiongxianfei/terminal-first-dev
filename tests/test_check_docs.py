@@ -52,6 +52,21 @@ class MarkdownChecks(unittest.TestCase):
             self.assertEqual(errors, [])
             self.assertEqual((count, links), (3, 4))
 
+    def test_repository_command_targets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'docs').mkdir()
+            (root / 'tests').mkdir()
+            (root / 'docs/current.md').write_text('# Current\n', encoding='utf-8')
+            (root / 'tests/check_docs.py').write_text('', encoding='utf-8')
+            (root / 'README.md').write_text(
+                '# Index\n```bash\ntest -f docs/current.md\n'
+                'test -f docs/retired.md\nbash tests/retired.test.sh\n'
+                'python3 tests/check_docs.py\n```\n', encoding='utf-8')
+            errors, _, _ = check_repo(root)
+            self.assertEqual(len(errors), 2)
+            self.assertTrue(all('missing repository command target' in e for e in errors))
+
     def test_repository_escape_fails(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

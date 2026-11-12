@@ -22,7 +22,7 @@ The knowledge base can grow across Windows, Linux, and macOS. Current executable
 
 Read each note's prerequisites and safety warnings. Administrator privileges, destructive operations, certificate trust, package sources, mounts, and sudoers changes require particular care. This is not an unattended installer.
 
-The repository reorganization preserves existing commands and configurations; it does not certify their current versions or prove that setup succeeds on your machine. Use the verification steps and record the platform, versions, date, and results when you test a procedure.
+The repository reorganization preserves workstation setup commands and configurations; it does not certify their current versions or prove that setup succeeds on your machine. Repository validation commands are updated to the new paths. Use the verification steps and record the platform, versions, date, and results when you test a procedure.
 
 ## Maintenance
 

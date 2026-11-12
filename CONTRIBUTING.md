@@ -39,7 +39,7 @@ for test in tests/markdown/*.test.sh; do
 done
 ```
 
-The Python checker validates maintained Markdown titles, local file links, and heading anchors, including the archive index. It skips fenced and inline code examples. The retained shell checks cover Windows/WSL, Ubuntu safety guidance, and Neovim/tmux configurations; they do not execute setup commands.
+The Python checker validates maintained Markdown titles, local file links, and heading anchors, including the archive index. Link parsing skips code examples; a separate check validates literal repository file paths used by `test -f`, `bash`, and `python3` commands, including examples. The retained shell checks cover Windows/WSL, Ubuntu safety guidance, and Neovim/tmux configurations; they do not execute setup commands.
 
 External URLs and frozen records under `archive/legacy/` are not revalidated. These checks do not prove that Windows, WSL, package installation, networking, or editor startup works. Report any manual checks separately.
 

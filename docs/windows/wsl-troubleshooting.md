@@ -6,7 +6,7 @@ Track WSL command-version drift, unsupported options, storage-location checks, a
 
 ## Current scope
 
-M2 records the first WSL troubleshooting notes for fresh install-location support, migration/import-in-place, and storage path verification.
+This note covers fresh install-location support, migration/import-in-place recovery, and storage path verification.
 
 ## Safety notes
 
