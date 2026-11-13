@@ -12,7 +12,7 @@ A personal knowledge base for terminal-first development: setup, configuration, 
 | Tools | [Tool recommendations, installation commands, and official resources](docs/tools/README.md) — Neovim, tmux, uv, zoxide, and fzf |
 | Networking | [WSL proxy setup and troubleshooting](docs/networking/proxy.md) |
 | Configuration | [Neovim](config/nvim/init.lua), [tmux](config/tmux/tmux.conf), [shell configuration](docs/tools/fzf.md) — check each guide’s platform scope and verification status |
-| Tasks | [001: tmux and uv terminal-block guides](tasks/001-tmux-uv-terminal-block-guides.md), [002: official links and tool recommendations](tasks/002-official-links-and-tool-recommendations.md) — completed work and verification results |
+| Tasks | [001: tmux and uv terminal-block guides](tasks/001-tmux-uv-terminal-block-guides.md), [002: official links and tool recommendations](tasks/002-official-links-and-tool-recommendations.md), [003: standardize task records](tasks/003-standardize-task-records.md) — work records and verification results; [task template](tasks/TEMPLATE.md) |
 
 [zoxide](docs/tools/zoxide.md) and [fzf](docs/tools/fzf.md) provide optional shell navigation; see their guides for setup.
 
