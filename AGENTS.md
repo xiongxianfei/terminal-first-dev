@@ -24,9 +24,19 @@ Keep one tool per row in the [tool index](docs/tools/README.md), with installati
 
 ## Task records
 
-Record repository work in `tasks/NNN-short-description.md`, starting at `001`. Use the next unused sequence number and a lowercase, hyphen-separated description; never renumber existing tasks or reuse their numbers. Keep the date and status inside the file rather than in its name.
+Record repository work in `tasks/NNN-short-description.md`, starting at `001`. Use the next unused sequence number and a lowercase, hyphen-separated description; never renumber existing tasks or reuse their numbers. Keep the date inside the file rather than in its name.
 
-Each record should include the objective, agreed plan, status, implemented changes, and actual verification results or skips. Task records describe work performed; keep current tool instructions in the relevant guides and link to them instead of duplicating them.
+Start new records from the [task template](tasks/TEMPLATE.md); the template does not consume a sequence number. Apply this format to future tasks without rewriting completed records 001 and 002. Include these sections in order:
+
+- **Background:** explain the problem, context, and why the work matters.
+- **Input:** identify the user request and source files or references; include links and relevant versions or commits when available.
+- **Output:** define expected deliverables and observable acceptance criteria.
+- **Rules:** state scope, exclusions, and constraints; link to shared requirements instead of duplicating them.
+- **Implementation:** distinguish the agreed plan from actual changes, and explain deviations.
+- **Progress checklist:** track concrete, observable actions with `- [ ]` and `- [x]`. Check an item only when finished; leave unfinished items unchecked and annotate blockers with what is needed next. Use this checklist instead of a top-level status field.
+- **Result:** record actual outcomes, delivered artifacts, verification evidence, failures, justified skips, and remaining limitations. Keep unperformed work and checks explicitly pending; completion requires the acceptance criteria to be met and results recorded.
+
+Keep records proportional to the work. Task records describe work performed; keep current tool instructions in the relevant guides and link to them instead of duplicating them. The documentation checker excludes task contents, so inspect their local links and anchors separately.
 
 ## Checks
 
