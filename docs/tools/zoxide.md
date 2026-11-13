@@ -2,6 +2,8 @@
 
 Jump to familiar directories with `z`; use [fzf](fzf.md) 0.51.0+ for `zi`. Platform walkthroughs below are unverified.
 
+**Official resources:** [zoxide repository](https://github.com/ajeetdsouza/zoxide).
+
 ## Ubuntu 26.04
 
 Requires Bash, `curl`, `tar`, `vim`, and CA certificates. Run inside Ubuntu, including when using WSL. Stop if installation fails.

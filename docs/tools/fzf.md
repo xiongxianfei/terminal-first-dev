@@ -2,6 +2,8 @@
 
 Select items interactively from files, history, or command output. Use fzf 0.51.0+ with [zoxide](zoxide.md) for `zi`. Platform walkthroughs below are unverified.
 
+**Official resources:** [fzf repository](https://github.com/junegunn/fzf).
+
 ## Ubuntu 26.04
 
 Requires Bash, Git, `curl` or `wget`, `tar`, Vim, and CA certificates. Run inside Ubuntu, including WSL. Use the upgrade section if `~/.fzf` already exists. Stop if installation fails.
