@@ -174,15 +174,7 @@ Review startup errors, plugin state, and health output. Missing optional languag
 
 ### tmux on Ubuntu
 
-From the repository root, check the version and load the configuration in the named test session:
-
-```bash
-tmux -V
-tmux -f config/tmux/tmux.conf new-session -d -s terminal-first-check
-tmux kill-session -t terminal-first-check
-```
-
-Use this session name only when it is not already in use. This guide does not provide native Windows tmux verification.
+From an Ubuntu terminal at the repository root, run the [isolated tmux configuration check](../tools/tmux.md#verify-in-a-new-terminal). It uses a unique disposable server and cleans up only that server, leaving existing sessions unaffected. Record the version, configuration errors, and option-check results. This guide does not provide native Windows tmux verification.
 
 ### Optional configuration smoke checks
 
@@ -190,11 +182,9 @@ Only run where the tools are installed, after reading the configurations. Neovim
 
 ```bash
 nvim --headless --cmd 'set runtimepath^=config/nvim' -u config/nvim/init.lua +qa
-tmux -f config/tmux/tmux.conf new-session -d -s terminal-first-check
-tmux kill-session -t terminal-first-check
 ```
 
-Record missing tools as `skipped` or `needs manual action`, rather than claiming success.
+For tmux, use the isolated check linked above. Record missing tools as `skipped` or `needs manual action`, rather than claiming success.
 
 ## Failures and rollback
 

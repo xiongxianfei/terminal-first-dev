@@ -22,6 +22,12 @@ Use `docs/windows/`, `docs/linux/`, and `docs/macos/` for platform-specific beha
 
 Keep one tool per row in the [tool index](docs/tools/README.md), with installation commands shown directly in platform columns. Keep those commands aligned with the individual guides. Use `—` for platforms not covered by a guide; this is not a claim that the tool is unsupported.
 
+## Task records
+
+Record repository work in `tasks/NNN-short-description.md`, starting at `001`. Use the next unused sequence number and a lowercase, hyphen-separated description; never renumber existing tasks or reuse their numbers. Keep the date and status inside the file rather than in its name.
+
+Each record should include the objective, agreed plan, status, implemented changes, and actual verification results or skips. Task records describe work performed; keep current tool instructions in the relevant guides and link to them instead of duplicating them.
+
 ## Checks
 
 Run these checks from the repository root with Python 3.10+, then inspect the diff:

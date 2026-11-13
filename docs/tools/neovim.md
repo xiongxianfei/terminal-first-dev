@@ -7,65 +7,13 @@
 **Scope:** User-local Neovim setup for Windows PowerShell and Ubuntu.
 **Safety:** Replacing `%LocalAppData%\nvim` or `~/.config/nvim` changes editor behavior for that user.
 
+**Official resources:** [Neovim website](https://neovim.io/).
+
 ## Fast path
 
-1. Install Neovim where you need it.
-
-   Run from Windows PowerShell:
-
-   ```powershell
-   winget install --id Neovim.Neovim --source winget
-   ```
-
-   Expected result: WinGet installs Neovim or reports that it is already installed.
-
-   Run from Ubuntu:
-
-   ```bash
-   sudo apt update
-   sudo apt install -y neovim
-   ```
-
-   Expected result: APT installs Neovim or reports that it is already installed.
-
-2. Deploy the shared config separately per environment.
-
-   Backup: if `%LocalAppData%\nvim` already exists, save a copy before replacing it.
-
-   Backup: if `~/.config/nvim` already exists, save a copy before replacing it.
-
-   Expected result: `config/nvim/init.lua` is available as the Neovim config in each environment you choose to configure.
-
-3. Verify Neovim startup and health.
-
-   Run from Windows PowerShell:
-
-   ```powershell
-   nvim --version
-   ```
-
-   Expected result: Windows Neovim prints its installed version.
-
-   Run from Ubuntu:
-
-   ```bash
-   nvim --version
-   nvim --clean +'quit'
-   ```
-
-   Expected result: Ubuntu Neovim prints its installed version and starts without user config errors.
-
-   Run inside Neovim after deploying the config:
-
-   ```vim
-   :Lazy
-   ```
-
-   ```vim
-   :checkhealth
-   ```
-
-   Expected result: plugin manager status is readable and health checks report missing optional tools without blocking startup.
+1. Install Neovim on [Windows](#1-install-neovim-on-windows) or [Ubuntu](#2-install-neovim-on-ubuntu); use the [Ubuntu release-tarball fallback](#3-use-the-ubuntu-release-tarball-fallback-when-needed) if the package is too old for your needs.
+2. [Back up and deploy the shared config separately per environment](#4-deploy-the-config-per-environment).
+3. [Verify startup, plugins, and health](#6-verify-startup-plugins-and-health).
 
 ## Walkthrough
 

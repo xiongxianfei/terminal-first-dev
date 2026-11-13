@@ -9,9 +9,10 @@ A personal knowledge base for terminal-first development: setup, configuration, 
 | Linux | [Ubuntu baseline](docs/linux/ubuntu-setup.md) — currently written for Ubuntu in WSL2 |
 | Windows | [Host and PowerShell setup](docs/windows/setup.md), [WSL2 Ubuntu](docs/windows/wsl.md), [WSL troubleshooting](docs/windows/wsl-troubleshooting.md), [verification](docs/windows/verification.md) |
 | macOS | [MacBook terminal baseline](docs/macos/setup.md), [verification record](docs/macos/verification.md) — manual verification is not complete |
-| Tools | [Tool index and installation commands](docs/tools/README.md) — Neovim, tmux, uv, zoxide, and fzf |
+| Tools | [Tool recommendations, installation commands, and official resources](docs/tools/README.md) — Neovim, tmux, uv, zoxide, and fzf |
 | Networking | [WSL proxy setup and troubleshooting](docs/networking/proxy.md) |
 | Configuration | [Neovim](config/nvim/init.lua), [tmux](config/tmux/tmux.conf), [shell configuration](docs/tools/fzf.md) — check each guide’s platform scope and verification status |
+| Tasks | [001: tmux and uv terminal-block guides](tasks/001-tmux-uv-terminal-block-guides.md), [002: official links and tool recommendations](tasks/002-official-links-and-tool-recommendations.md) — completed work and verification results |
 
 [zoxide](docs/tools/zoxide.md) and [fzf](docs/tools/fzf.md) provide optional shell navigation; see their guides for setup.
 
