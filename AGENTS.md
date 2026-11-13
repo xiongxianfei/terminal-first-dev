@@ -20,23 +20,15 @@ This is a personal development knowledge base, organized by platform and tool. [
 
 Use `docs/windows/`, `docs/linux/`, and `docs/macos/` for platform-specific behavior, `docs/tools/` for shared tool knowledge, and `docs/networking/` for network topics.
 
-Keep one tool per row in the [tool index](docs/tools/README.md), with installation commands shown directly in platform columns. Keep those commands aligned with the individual guides. Use `—` for platforms not covered by a guide; this is not a claim that the tool is unsupported.
+Maintain one record per tool in [docs/tools/tools.json](docs/tools/tools.json), the sole tool summary. Edit JSON directly; no Markdown table is generated. Keep the existing fields: `name`, repository-relative `guide`, `recommended_when`, platform commands in `install`, and `official` label/URL. Store commands as literal single-line text using JSON escaping only; `null` means the guide does not cover that platform, not that the tool is unsupported. Keep names unique and commands aligned with the individual guides, which remain the source for detailed procedures, prerequisites, and warnings.
 
 ## Task records
 
-Record repository work in `tasks/NNN-short-description.md`, starting at `001`. Use the next unused sequence number and a lowercase, hyphen-separated description; never renumber existing tasks or reuse their numbers. Keep the date inside the file rather than in its name.
+Use the installed `task-writer` skill to create and maintain repository work records. If it is unavailable, report the missing skill rather than inventing a local substitute.
 
-Start new records from the [task template](tasks/TEMPLATE.md); the template does not consume a sequence number. Apply this format to future tasks without rewriting completed records 001 and 002. Include these sections in order:
-
-- **Background:** explain the problem, context, and why the work matters.
-- **Input:** identify the user request and source files or references; include links and relevant versions or commits when available.
-- **Output:** define expected deliverables and observable acceptance criteria.
-- **Rules:** state scope, exclusions, and constraints; link to shared requirements instead of duplicating them.
-- **Implementation:** distinguish the agreed plan from actual changes, and explain deviations.
-- **Progress checklist:** track concrete, observable actions with `- [ ]` and `- [x]`. Check an item only when finished; leave unfinished items unchecked and annotate blockers with what is needed next. Use this checklist instead of a top-level status field.
-- **Result:** record actual outcomes, delivered artifacts, verification evidence, failures, justified skips, and remaining limitations. Keep unperformed work and checks explicitly pending; completion requires the acceptance criteria to be met and results recorded.
-
-Keep records proportional to the work. Task records describe work performed; keep current tool instructions in the relevant guides and link to them instead of duplicating them. The documentation checker excludes task contents, so inspect their local links and anchors separately.
+- Save records in `tasks/NNN-short-description.md`, using the next unused number and a lowercase, hyphen-separated description. Never renumber records or reuse numbers; keep the date inside the file.
+- Include the required repository verification results and inspect task links separately, since the documentation checker excludes task contents.
+- Honor requests to show a draft before saving. Task records do not need README entries.
 
 ## Checks
 
@@ -45,6 +37,7 @@ Run these checks from the repository root with Python 3.10+, then inspect the di
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 tests/check_docs.py
+git diff --check
 ```
 
 These checks validate documentation and test the documentation checker; they do not execute tool installation or shell configuration, or verify real Windows, WSL, or macOS setup. External URLs are not checked.

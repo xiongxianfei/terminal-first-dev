@@ -9,12 +9,21 @@ A personal knowledge base for terminal-first development: setup, configuration, 
 | Linux | [Ubuntu baseline](docs/linux/ubuntu-setup.md) — currently written for Ubuntu in WSL2 |
 | Windows | [Host and PowerShell setup](docs/windows/setup.md), [WSL2 Ubuntu](docs/windows/wsl.md), [WSL troubleshooting](docs/windows/wsl-troubleshooting.md), [verification](docs/windows/verification.md) |
 | macOS | [MacBook terminal baseline](docs/macos/setup.md), [verification record](docs/macos/verification.md) — manual verification is not complete |
-| Tools | [Tool recommendations, installation commands, and official resources](docs/tools/README.md) — Neovim, tmux, uv, zoxide, and fzf |
+| Tools | [JSON tool summary](docs/tools/tools.json) — [Neovim](docs/tools/neovim.md), [tmux](docs/tools/tmux.md), [uv](docs/tools/uv.md), [zoxide](docs/tools/zoxide.md), and [fzf](docs/tools/fzf.md) |
 | Networking | [WSL proxy setup and troubleshooting](docs/networking/proxy.md) |
 | Configuration | [Neovim](config/nvim/init.lua), [tmux](config/tmux/tmux.conf), [shell configuration](docs/tools/fzf.md) — check each guide’s platform scope and verification status |
-| Tasks | [001: tmux and uv terminal-block guides](tasks/001-tmux-uv-terminal-block-guides.md), [002: official links and tool recommendations](tasks/002-official-links-and-tool-recommendations.md), [003: standardize task records](tasks/003-standardize-task-records.md) — work records and verification results; [task template](tasks/TEMPLATE.md) |
 
-[zoxide](docs/tools/zoxide.md) and [fzf](docs/tools/fzf.md) provide optional shell navigation; see their guides for setup.
+## Using the tool summary
+
+The [JSON summary](docs/tools/tools.json) contains recommendations, installation commands, and official resources. Guide paths are relative to the repository root. `null` means a platform is not covered by that guide, not unsupported by the tool. Read the relevant guide before running commands; listed commands do not imply verified compatibility. Windows and WSL require separate installations.
+
+- Windows requires PowerShell and WinGet for WinGet commands; installers may request elevation. The uv command executes downloaded code and bypasses execution policy for its child PowerShell process; follow local policy.
+- Ubuntu/WSL requires each guide's prerequisites. APT commands require sudo and change system packages. The uv and zoxide commands execute remote scripts; fzf executes a cloned installer that offers to edit shell profiles. Review upstream code and back up profiles and existing installations first. The fzf clone requires `~/.fzf` not to exist; use its guide's update procedure for an existing checkout.
+- macOS requires Homebrew already configured; run it without sudo.
+
+APT versions may lag upstream; see the [Neovim release fallback](docs/tools/neovim.md#3-use-the-ubuntu-release-tarball-fallback-when-needed). The zoxide and fzf installers follow upstream releases rather than fixed versions.
+
+Pair [zoxide](docs/tools/zoxide.md) with [fzf](docs/tools/fzf.md) for interactive directory jumping with `zi`. Follow their initialization and optional keybinding instructions; installing executables alone does not enable shell functions or keybindings. Reusable configuration links remain in the topic index above.
 
 ## Windows/WSL setup path
 
