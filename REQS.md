@@ -9,6 +9,7 @@
 
 - Make each tool’s purpose and platform-specific installation easy to find.
 - Use the tool index as a workflow-based selection summary, with a “Recommended when” entry and official resources for each tool alongside platform installation commands.
+- Maintain the tool summary in JSON only, without a generated Markdown table or generation tooling. Preserve readable navigation and surrounding prerequisites and safety guidance; keep summary commands aligned with the detailed guides. A `null` platform entry means the guide does not cover that platform.
 - Place a prominent official-resource link immediately after each tool guide’s introduction; retain detailed references beside relevant procedures.
 - Provide a concise quick start for each covered platform, including installation, configuration, verification, and first use. Keep commands together where practical; separate manual file edits from terminal commands.
 - For manual edits, show the file to open, the exact content to add or change, and verification in a new terminal.

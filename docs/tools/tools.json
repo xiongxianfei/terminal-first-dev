@@ -1,0 +1,74 @@
+{
+  "tools": [
+    {
+      "name": "Neovim",
+      "guide": "docs/tools/neovim.md",
+      "recommended_when": "You want to edit code in the terminal",
+      "install": {
+        "windows": "winget install --id Neovim.Neovim --source winget",
+        "ubuntu_wsl": "sudo apt update && sudo apt install -y neovim",
+        "macos": null
+      },
+      "official": {
+        "label": "Neovim website",
+        "url": "https://neovim.io/"
+      }
+    },
+    {
+      "name": "tmux",
+      "guide": "docs/tools/tmux.md",
+      "recommended_when": "You need persistent terminal sessions and multiple panes",
+      "install": {
+        "windows": null,
+        "ubuntu_wsl": "sudo apt update && sudo apt install -y tmux",
+        "macos": null
+      },
+      "official": {
+        "label": "tmux wiki",
+        "url": "https://github.com/tmux/tmux/wiki"
+      }
+    },
+    {
+      "name": "uv",
+      "guide": "docs/tools/uv.md",
+      "recommended_when": "You work with Python projects, packages, or environments",
+      "install": {
+        "windows": "powershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"",
+        "ubuntu_wsl": "curl -LsSf https://astral.sh/uv/install.sh | sh",
+        "macos": null
+      },
+      "official": {
+        "label": "uv documentation",
+        "url": "https://docs.astral.sh/uv/"
+      }
+    },
+    {
+      "name": "zoxide",
+      "guide": "docs/tools/zoxide.md",
+      "recommended_when": "You often return to the same directories",
+      "install": {
+        "windows": "winget install --id ajeetdsouza.zoxide --exact --source winget",
+        "ubuntu_wsl": "curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh",
+        "macos": null
+      },
+      "official": {
+        "label": "zoxide repository",
+        "url": "https://github.com/ajeetdsouza/zoxide"
+      }
+    },
+    {
+      "name": "fzf",
+      "guide": "docs/tools/fzf.md",
+      "recommended_when": "You want interactive selection from files, history, or command output",
+      "install": {
+        "windows": "winget install --id junegunn.fzf --exact --source winget",
+        "ubuntu_wsl": "git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install",
+        "macos": "brew install fzf"
+      },
+      "official": {
+        "label": "fzf repository",
+        "url": "https://github.com/junegunn/fzf"
+      }
+    }
+  ]
+}

@@ -14,7 +14,7 @@ Task records need to explain why work matters, which sources inform it, what sho
 
 ## Output
 
-- Updated task-writing conventions and a reusable [template](TEMPLATE.md).
+- Updated task-writing conventions and a reusable template.
 - This task as the first example of the new format, linked from the root [topic index](../README.md#topics).
 - Acceptance criteria: conventions, template, and task 003 use the seven agreed sections in order, track progress with concrete checkboxes, and distinguish expected outputs from actual results. Tasks 001 and 002 remain unchanged, required documentation checks pass, and task/template links resolve.
 
@@ -34,7 +34,7 @@ Follow [repository conventions](../AGENTS.md) and [requirements](../REQS.md). Ap
 ### Actual changes
 
 - Updated [AGENTS.md](../AGENTS.md#task-records) with section definitions, template usage, progress tracking, and evidence requirements.
-- Added the [template](TEMPLATE.md) and this record with the agreed structure and no top-level status field.
+- Added the template and this record with the agreed structure and no top-level status field.
 - Added task 003 and the template to the root [topic index](../README.md#topics).
 - No deviations from the agreed plan.
 
