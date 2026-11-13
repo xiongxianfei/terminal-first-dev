@@ -62,3 +62,6 @@ Acceptance criteria met. No installation or automated-check failures occurred. A
 
 
 The user subsequently requested committing the pending repository changes and creating a PR to main. Published the final documentation changes as `7ae99ab` on `docs/json-index-and-task-writer`, based on current main, and opened [terminal-first-dev PR #12](https://github.com/xiongxianfei/terminal-first-dev/pull/12). The PR includes the pending JSON-index work and records from this session, and supersedes PR #11's template-based approach. Re-ran all 7 unit tests, the documentation checker (18 files, 126 links), JSON parsing, and whitespace checks successfully. Rebasing made no file-content changes. The installed skill remains outside Git. No merge was performed.
+
+
+After PR #11 merged, the user requested resolving PR #12's conflicts. Merged main at `29bf6e0` into the PR branch, retaining the approved skill-based AGENTS instructions, README Tasks-row removal, and plain-text template mentions in task 003. Removed the template reintroduced by main. The resolved tree matched the pre-merge implementation before adding this note. All 7 unit tests, documentation checks (18 files, 126 links), and whitespace checks passed.
